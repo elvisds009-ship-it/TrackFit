@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,82 +11,82 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080810;
-  --bg2:#0d0d1a;
-  --surface:rgba(255,255,255,0.03);
-  --surface2:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.08);
-  --border-hover:rgba(255,255,255,0.18);
-  --gold:#c9a84c;
-  --gold2:#e8cc7a;
-  --gold-glow:rgba(201,168,76,0.15);
-  --platinum:#e8e8f0;
-  --muted:rgba(232,232,240,0.4);
-  --muted2:rgba(232,232,240,0.25);
-  --text:#e8e8f0;
-  --accent:#c9a84c;
-  --red:#e05c5c;
-  --font-display:'Cormorant Garamond',serif;
-  --font-body:'Outfit',sans-serif;
-  --radius:2px;
-  --transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  --bg:#080810;--bg2:#0d0d1a;
+  --surface:rgba(255,255,255,0.03);--surface2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.18);
+  --gold:#c9a84c;--gold2:#e8cc7a;--gold-glow:rgba(201,168,76,0.15);
+  --platinum:#e8e8f0;--muted:rgba(232,232,240,0.4);--muted2:rgba(232,232,240,0.25);
+  --text:#e8e8f0;--red:#e05c5c;--green:#5ce0a0;
+  --font-display:'Cormorant Garamond',serif;--font-body:'Outfit',sans-serif;
+  --radius:2px;--transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-
+[data-theme="light"]{
+  --bg:#f7f5ef;--bg2:#eeebe3;
+  --surface:rgba(0,0,0,0.025);--surface2:rgba(0,0,0,0.05);
+  --border:rgba(0,0,0,0.1);--border-hover:rgba(0,0,0,0.22);
+  --gold:#9e7320;--gold2:#7a5518;--gold-glow:rgba(158,115,32,0.12);
+  --platinum:#1a1828;--muted:rgba(26,24,40,0.45);--muted2:rgba(26,24,40,0.25);
+  --text:#1a1828;--red:#b02020;--green:#1a7a50;
+}
 html{scroll-behavior:smooth}
 body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-body);
-  min-height:100vh;
-  overflow-x:hidden;
+  background:var(--bg);color:var(--text);font-family:var(--font-body);
+  min-height:100vh;overflow-x:hidden;
+  transition:background 0.35s ease,color 0.35s ease;
 }
-
-/* BACKGROUND FX */
 body::before{
-  content:'';
-  position:fixed;inset:0;
+  content:'';position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(201,168,76,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(100,80,200,0.05) 0%, transparent 60%);
+    radial-gradient(ellipse 80% 60% at 20% -10%,rgba(201,168,76,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%,rgba(100,80,200,0.05) 0%,transparent 60%);
   pointer-events:none;z-index:0;
 }
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%,rgba(201,168,76,0.09) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%,rgba(100,80,200,0.04) 0%,transparent 60%);
+}
 body::after{
-  content:'';
-  position:fixed;inset:0;
+  content:'';position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   opacity:0.025;pointer-events:none;z-index:0;
 }
-
+[data-theme="light"] body::after{opacity:0.01;}
 #root{position:relative;z-index:1}
-
 .app{max-width:900px;margin:0 auto;padding:0 24px 100px}
 
 /* HEADER */
 .header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:36px 0 28px;
-  border-bottom:1px solid var(--border);
-  margin-bottom:48px;
-  position:relative;
+  padding:26px 0 20px;border-bottom:1px solid var(--border);
+  margin-bottom:48px;position:relative;gap:12px;flex-wrap:wrap;
 }
-.header::after{
-  content:'';position:absolute;bottom:-1px;left:0;width:80px;height:1px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-}
-.logo{
-  font-family:var(--font-display);
-  font-size:2.2rem;
-  font-weight:300;
-  letter-spacing:8px;
-  color:var(--platinum);
-  cursor:pointer;
-  position:relative;
-}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+.header-left{display:flex;flex-direction:column;flex-shrink:0;}
+.header-center{flex:1;display:flex;justify-content:center;min-width:0;}
+.header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.logo{font-family:var(--font-display);font-size:2rem;font-weight:300;letter-spacing:8px;color:var(--platinum);cursor:pointer;}
 .logo span{color:var(--gold);}
-.logo-sub{font-size:.6rem;color:var(--muted);letter-spacing:5px;text-transform:uppercase;margin-top:3px;font-weight:300;}
+.logo-sub{font-size:.58rem;color:var(--muted);letter-spacing:5px;text-transform:uppercase;margin-top:2px;font-weight:300;}
 
+/* CTRL BUTTONS */
+.ctrl-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:34px;min-width:34px;padding:0 10px;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--muted);font-size:.72rem;cursor:pointer;
+  transition:var(--transition);border-radius:var(--radius);
+  font-family:var(--font-body);font-weight:500;letter-spacing:1.5px;
+}
+.ctrl-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+.ctrl-btn.is-active{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+.ctrl-sep{width:1px;height:20px;background:var(--border);margin:0 2px;flex-shrink:0;}
+.friends-btn{position:relative;}
+.friends-dot{position:absolute;top:-3px;right:-3px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);}
+
+/* BREADCRUMB */
 .breadcrumb{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--muted);letter-spacing:1px;flex-wrap:wrap;}
-.bc-link{color:var(--gold);cursor:pointer;transition:var(--transition);opacity:0.8;}
+.bc-link{color:var(--gold);cursor:pointer;transition:var(--transition);opacity:.8;}
 .bc-link:hover{opacity:1;}
 .bc-sep{color:var(--muted2);}
 
@@ -96,155 +96,75 @@ body::after{
   padding:11px 24px;border:none;cursor:pointer;
   font-family:var(--font-body);font-size:.72rem;font-weight:500;
   letter-spacing:2px;text-transform:uppercase;
-  transition:var(--transition);position:relative;overflow:hidden;
+  transition:var(--transition);position:relative;overflow:hidden;border-radius:var(--radius);
 }
-.btn::after{
-  content:'';position:absolute;inset:0;
-  background:rgba(255,255,255,0);
-  transition:background 0.2s;
-}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .2s;}
 .btn:hover::after{background:rgba(255,255,255,0.06);}
-
-.btn-primary{
-  background:linear-gradient(135deg,var(--gold),#a8862e);
-  color:#080810;font-weight:600;
-  box-shadow:0 0 30px rgba(201,168,76,0.2);
-}
-.btn-primary:hover{
-  box-shadow:0 0 50px rgba(201,168,76,0.35);
-  transform:translateY(-1px);
-}
-.btn-ghost{
-  background:var(--surface);
-  color:var(--muted);
-  border:1px solid var(--border);
-}
+.btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none;}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#a8862e);color:#1a1828;font-weight:600;box-shadow:0 0 30px rgba(201,168,76,0.2);}
+.btn-primary:hover{box-shadow:0 0 50px rgba(201,168,76,0.35);transform:translateY(-1px);}
+.btn-ghost{background:var(--surface);color:var(--muted);border:1px solid var(--border);}
 .btn-ghost:hover{border-color:var(--border-hover);color:var(--text);}
 .btn-danger{background:transparent;color:var(--red);border:1px solid rgba(224,92,92,0.3);}
-.btn-danger:hover{background:rgba(224,92,92,0.1);}
+.btn-danger:hover{background:rgba(224,92,92,0.08);}
 .btn-sm{padding:7px 16px;font-size:.65rem;}
 .btn-icon{background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;padding:6px;transition:var(--transition);}
 .btn-icon:hover{color:var(--red);transform:scale(1.1);}
 
 /* INPUTS */
 .input{
-  width:100%;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border);
-  color:var(--text);
-  font-family:var(--font-body);
-  font-size:.8rem;font-weight:300;
-  padding:12px 16px;
-  outline:none;
-  transition:var(--transition);
-  border-radius:var(--radius);
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);font-family:var(--font-body);font-size:.8rem;font-weight:300;
+  padding:12px 16px;outline:none;transition:var(--transition);border-radius:var(--radius);
 }
 .input:focus{border-color:var(--gold);background:rgba(201,168,76,0.04);box-shadow:0 0 0 3px rgba(201,168,76,0.06);}
 .input::placeholder{color:var(--muted2);}
 .input-row{display:flex;gap:8px;align-items:flex-end;}
 label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:400;}
 
-/* SECTION */
+/* PAGE */
 .page-title{
-  font-family:var(--font-display);
-  font-size:3.5rem;
-  font-weight:300;
-  letter-spacing:3px;
-  line-height:1;
-  margin-bottom:6px;
+  font-family:var(--font-display);font-size:3.5rem;font-weight:300;
+  letter-spacing:3px;line-height:1;margin-bottom:6px;
   background:linear-gradient(135deg,var(--platinum) 60%,var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .page-sub{font-size:.65rem;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:40px;font-weight:300;}
+.accent-bar{width:32px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:16px;}
 
 /* CARDS */
 .card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  padding:24px 28px;
-  margin-bottom:12px;
-  transition:var(--transition);
-  border-radius:var(--radius);
-  position:relative;
-  overflow:hidden;
+  background:var(--surface);border:1px solid var(--border);padding:24px 28px;
+  margin-bottom:12px;transition:var(--transition);border-radius:var(--radius);
+  position:relative;overflow:hidden;
 }
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);
-  opacity:0;transition:opacity 0.35s;
-}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);opacity:0;transition:opacity .35s;}
 .card-click{cursor:pointer;}
-.card-click:hover{
-  border-color:var(--border-hover);
-  background:var(--surface2);
-  transform:translateY(-2px);
-  box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 0 1px rgba(201,168,76,0.05);
-}
+.card-click:hover{border-color:var(--border-hover);background:var(--surface2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.15),0 0 0 1px rgba(201,168,76,0.05);}
 .card-click:hover::before{opacity:1;}
 .card-click:active{transform:translateY(0);}
 .card-header{display:flex;align-items:center;justify-content:space-between;}
-.card-title{
-  font-family:var(--font-display);
-  font-size:1.6rem;font-weight:400;
-  letter-spacing:1px;color:var(--platinum);
-}
-.card-meta{font-size:.63rem;color:var(--muted);letter-spacing:1px;margin-top:6px;}
+.card-title{font-family:var(--font-display);font-size:1.6rem;font-weight:400;letter-spacing:1px;color:var(--platinum);}
 
 /* TAGS */
-.tag{
-  display:inline-flex;align-items:center;
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  color:var(--muted);
-  font-size:.58rem;letter-spacing:2px;
-  padding:3px 10px;text-transform:uppercase;
-  margin-right:6px;border-radius:20px;
-  font-weight:400;
-}
-.tag-gold{
-  background:rgba(201,168,76,0.08);
-  border-color:rgba(201,168,76,0.25);
-  color:var(--gold2);
-}
+.tag{display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:.58rem;letter-spacing:2px;padding:3px 10px;text-transform:uppercase;margin-right:6px;border-radius:20px;font-weight:400;}
+.tag-gold{background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.25);color:var(--gold2);}
+[data-theme="light"] .tag-gold{background:rgba(158,115,32,0.1);border-color:rgba(158,115,32,0.3);}
 
 /* DAYS GRID */
 .days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:36px;}
-.day-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  padding:22px 20px 18px;
-  cursor:pointer;
-  transition:var(--transition);
-  position:relative;overflow:hidden;
-  min-height:100px;
-  border-radius:var(--radius);
-}
-.day-card::after{
-  content:'';
-  position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-.day-card:hover{border-color:rgba(201,168,76,0.25);background:var(--surface2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.day-card{background:var(--surface);border:1px solid var(--border);padding:22px 20px 18px;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;min-height:100px;border-radius:var(--radius);}
+.day-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.day-card:hover{border-color:rgba(201,168,76,0.25);background:var(--surface2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.15);}
 .day-card:hover::after{transform:scaleX(1);}
-.day-num-bg{
-  position:absolute;bottom:-10px;right:8px;
-  font-family:var(--font-display);font-size:4.5rem;font-weight:300;
-  color:rgba(255,255,255,0.03);line-height:1;
-  transition:var(--transition);pointer-events:none;
-  letter-spacing:-2px;
-}
+.day-num-bg{position:absolute;bottom:-10px;right:8px;font-family:var(--font-display);font-size:4.5rem;font-weight:300;color:rgba(255,255,255,0.03);line-height:1;transition:var(--transition);pointer-events:none;letter-spacing:-2px;}
+[data-theme="light"] .day-num-bg{color:rgba(0,0,0,0.04);}
 .day-card:hover .day-num-bg{color:rgba(201,168,76,0.08);}
 .day-card-name{font-size:.75rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;color:var(--platinum);}
 .day-card-count{font-size:.62rem;color:var(--muted);font-weight:300;}
 
 /* EXERCISE ROW */
-.exo-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 0;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:var(--transition);
-}
+.exo-row{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:var(--transition);}
 .exo-row:last-child{border-bottom:none;}
 .exo-row:hover{padding-left:10px;}
 .exo-row:hover .exo-arrow{color:var(--gold);transform:translateX(3px);}
@@ -254,201 +174,263 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 
 /* STATS */
 .stats-row{display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap;}
-.stat-box{
-  background:var(--surface);
-  border:1px solid var(--border);
-  padding:18px 22px;flex:1;min-width:90px;
-  border-radius:var(--radius);
-  transition:var(--transition);
-  position:relative;overflow:hidden;
-}
-.stat-box::before{
-  content:'';position:absolute;top:0;left:0;width:2px;height:100%;
-  background:linear-gradient(180deg,var(--gold),transparent);
-  opacity:0.4;
-}
+.stat-box{background:var(--surface);border:1px solid var(--border);padding:18px 22px;flex:1;min-width:90px;border-radius:var(--radius);transition:var(--transition);position:relative;overflow:hidden;}
+.stat-box::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(180deg,var(--gold),transparent);opacity:.4;}
 .stat-box:hover{border-color:rgba(201,168,76,0.2);transform:translateY(-2px);}
-.stat-value{
-  font-family:var(--font-display);
-  font-size:2.2rem;font-weight:400;
-  color:var(--gold2);letter-spacing:1px;line-height:1;
-}
-.stat-unit{font-size:1rem;color:var(--gold);opacity:0.7;}
+.stat-value{font-family:var(--font-display);font-size:2.2rem;font-weight:400;color:var(--gold2);letter-spacing:1px;line-height:1;}
+.stat-unit{font-size:1rem;color:var(--gold);opacity:.7;}
 .stat-label{font-size:.58rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:6px;font-weight:300;}
 
 /* LOG TABLE */
 .log-table{width:100%;border-collapse:collapse;margin-bottom:16px;}
-.log-table th{
-  font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);text-align:left;padding:8px 12px;
-  border-bottom:1px solid var(--border);font-weight:400;
-}
+.log-table th{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);font-weight:400;}
 .log-table td{padding:12px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.78rem;font-weight:300;}
+[data-theme="light"] .log-table td{border-bottom:1px solid rgba(0,0,0,0.04);}
 .log-table tr:last-child td{border-bottom:none;}
 .log-table .num{font-weight:500;color:var(--gold2);}
 
 /* HISTORY */
-.history-session{
-  border:1px solid var(--border);padding:20px 24px;
-  margin-bottom:10px;background:var(--surface);
-  border-radius:var(--radius);transition:var(--transition);
-  animation:slideIn 0.3s ease both;
-}
+.history-session{border:1px solid var(--border);padding:20px 24px;margin-bottom:10px;background:var(--surface);border-radius:var(--radius);transition:var(--transition);animation:slideIn .3s ease both;}
 .history-session:hover{border-color:var(--border-hover);}
-.history-date{
-  font-size:.62rem;letter-spacing:3px;color:var(--gold);
-  text-transform:uppercase;margin-bottom:14px;
-  display:flex;align-items:center;gap:10px;font-weight:400;
-}
+.history-date{font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-weight:400;}
 
 /* PR BADGE */
-.pr-badge{
-  background:linear-gradient(135deg,var(--gold),#a8862e);
-  color:#080810;font-size:.5rem;font-weight:700;
-  letter-spacing:1.5px;padding:3px 8px;border-radius:20px;
-  text-transform:uppercase;
-  box-shadow:0 0 12px rgba(201,168,76,0.4);
-  animation:prPulse 2s ease infinite;
-}
+.pr-badge{background:linear-gradient(135deg,var(--gold),#a8862e);color:#1a1828;font-size:.5rem;font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:20px;text-transform:uppercase;box-shadow:0 0 12px rgba(201,168,76,0.4);animation:prPulse 2s ease infinite;}
 @keyframes prPulse{0%,100%{box-shadow:0 0 12px rgba(201,168,76,0.4)}50%{box-shadow:0 0 20px rgba(201,168,76,0.7)}}
 
 /* EMPTY */
 .empty{text-align:center;padding:80px 20px;color:var(--muted);}
-.empty-icon{font-size:2.5rem;margin-bottom:16px;opacity:0.4;}
+.empty-icon{font-size:2.5rem;margin-bottom:16px;opacity:.4;}
 .empty-text{font-size:.65rem;letter-spacing:4px;text-transform:uppercase;font-weight:300;}
 
 /* MODAL */
-.overlay{
-  position:fixed;inset:0;
-  background:rgba(4,4,12,0.85);
-  backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;
-  z-index:100;padding:20px;
-  animation:fadeOverlay 0.2s ease;
-}
+.overlay{position:fixed;inset:0;background:rgba(4,4,12,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;animation:fadeOverlay .2s ease;}
+[data-theme="light"] .overlay{background:rgba(230,227,218,0.88);}
 @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
 .modal{
-  background:#0f0f1e;
-  border:1px solid var(--border);
-  padding:36px;width:100%;max-width:480px;
-  max-height:90vh;overflow-y:auto;
-  border-radius:var(--radius);
-  position:relative;
+  background:#0f0f1e;border:1px solid var(--border);padding:36px;
+  width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  border-radius:var(--radius);position:relative;
   box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.08);
-  animation:modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
 }
-@keyframes modalIn{from{opacity:0;transform:scale(0.96) translateY(10px)}to{opacity:1;transform:none}}
-.modal::before{
-  content:'';position:absolute;top:0;left:36px;right:36px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  opacity:0.4;
-}
-.modal-title{
-  font-family:var(--font-display);
-  font-size:2rem;font-weight:300;letter-spacing:3px;
-  margin-bottom:28px;color:var(--platinum);
-}
+[data-theme="light"] .modal{background:#f0ede6;box-shadow:0 40px 80px rgba(0,0,0,0.12),0 0 0 1px rgba(158,115,32,0.1);}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+.modal::before{content:'';position:absolute;top:0;left:36px;right:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4;}
+.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:300;letter-spacing:3px;margin-bottom:28px;color:var(--platinum);}
+.form-group{margin-bottom:18px;}
 
 /* SET ROW */
 .set-row{display:grid;grid-template-columns:36px 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px;}
 .set-num{font-size:.62rem;color:var(--muted);text-align:center;font-weight:300;}
 
-/* DIVIDER */
-.divider{border:none;border-top:1px solid var(--border);margin:28px 0;}
-.form-group{margin-bottom:18px;}
-.accent-bar{width:32px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:16px;}
+/* GOLD LINE */
+.gold-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin:32px 0;}
 
-/* ANIMATIONS */
-.fade-in{animation:fadeIn 0.4s cubic-bezier(0.4,0,0.2,1) both;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.slide-in{animation:slideIn 0.3s ease both;}
-@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+/* ARROW RIGHT */
+.arrow-right{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--border);color:var(--muted);font-size:.7rem;transition:var(--transition);border-radius:50%;}
+.card-click:hover .arrow-right{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.2);}
 
-/* STAGGER */
-.stagger > *{animation:fadeIn 0.4s cubic-bezier(0.4,0,0.2,1) both;}
-.stagger > *:nth-child(1){animation-delay:0.05s}
-.stagger > *:nth-child(2){animation-delay:0.1s}
-.stagger > *:nth-child(3){animation-delay:0.15s}
-.stagger > *:nth-child(4){animation-delay:0.2s}
-.stagger > *:nth-child(5){animation-delay:0.25s}
-.stagger > *:nth-child(6){animation-delay:0.3s}
-.stagger > *:nth-child(7){animation-delay:0.35s}
+/* SECTION TITLE */
+.section-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:400;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PROFILE SECTION */
+.profile-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;position:relative;overflow:hidden;transition:var(--transition);}
+.profile-section::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),transparent);}
+.profile-section:hover{border-color:var(--border-hover);}
+
+/* FRIENDS */
+.friend-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:var(--transition);}
+.friend-card:hover{border-color:var(--border-hover);}
+.friend-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;}
+.friend-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),rgba(201,168,76,0.4));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;font-weight:500;color:#1a1828;flex-shrink:0;margin-right:14px;}
+.friend-name{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--platinum);letter-spacing:1px;}
+.friend-sub{font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-top:2px;}
+.friend-body{padding:4px 24px 20px;}
+.friend-section-label{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:400;padding-top:16px;border-top:1px solid var(--border);}
+
+/* PR FEED */
+.pr-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.pr-item:last-child{border-bottom:none;}
+.pr-info{flex:1;}
+.pr-exo{font-size:.75rem;font-weight:500;color:var(--platinum);}
+.pr-detail{font-size:.6rem;color:var(--muted);margin-top:2px;}
+.pr-weight{font-family:var(--font-display);font-size:1.5rem;color:var(--gold2);font-weight:400;flex-shrink:0;}
+
+/* SHARE CODE */
+.share-code-box{
+  background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.2);
+  border-radius:var(--radius);padding:14px 16px;font-family:monospace;
+  font-size:.6rem;color:var(--muted);word-break:break-all;line-height:1.7;
+  margin:12px 0;max-height:72px;overflow:hidden;position:relative;
+  cursor:pointer;transition:var(--transition);
+}
+.share-code-box:hover{border-color:var(--gold);color:var(--text);}
+.share-code-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:28px;background:linear-gradient(transparent,var(--bg));}
+[data-theme="light"] .share-code-box::after{background:linear-gradient(transparent,var(--surface));}
+
+/* COPY SUCCESS / ERROR */
+.msg-ok{color:var(--green);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;font-weight:500;}
+.msg-err{color:var(--red);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;font-weight:400;}
 
 /* RANGE */
-input[type=range]{
-  width:100%;margin-top:10px;
-  -webkit-appearance:none;appearance:none;
-  height:2px;background:var(--border);border-radius:2px;outline:none;
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
-  background:var(--gold);cursor:pointer;
-  box-shadow:0 0 10px rgba(201,168,76,0.4);
-  transition:box-shadow 0.2s;
-}
+input[type=range]{width:100%;margin-top:10px;-webkit-appearance:none;appearance:none;height:2px;background:var(--border);border-radius:2px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 10px rgba(201,168,76,0.4);transition:box-shadow .2s;}
 input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(201,168,76,0.6);}
 input[type=date]{color-scheme:dark;}
+[data-theme="light"] input[type=date]{color-scheme:light;}
+
+/* LOADER */
+.loader{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;animation:loaderFade .4s .5s ease forwards;}
+@keyframes loaderFade{to{opacity:0;pointer-events:none}}
+.loader-logo{font-family:var(--font-display);font-size:3rem;font-weight:300;letter-spacing:12px;color:var(--gold);animation:logoPulse .5s ease;}
+@keyframes logoPulse{from{opacity:0;letter-spacing:20px}to{opacity:1;letter-spacing:12px}}
+
+/* ANIMATIONS */
+.fade-in{animation:fadeIn .4s cubic-bezier(.4,0,.2,1) both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.stagger>*{animation:fadeIn .4s cubic-bezier(.4,0,.2,1) both;}
+.stagger>*:nth-child(1){animation-delay:.05s}.stagger>*:nth-child(2){animation-delay:.1s}
+.stagger>*:nth-child(3){animation-delay:.15s}.stagger>*:nth-child(4){animation-delay:.2s}
+.stagger>*:nth-child(5){animation-delay:.25s}.stagger>*:nth-child(6){animation-delay:.3s}
+.stagger>*:nth-child(7){animation-delay:.35s}
 
 /* SCROLLBAR */
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:2px;}
 ::-webkit-scrollbar-thumb:hover{background:rgba(201,168,76,0.4);}
 
-/* LOADING */
-.loader{
-  position:fixed;inset:0;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  z-index:999;
-  animation:loaderFade 0.4s 0.5s ease forwards;
+@media(max-width:640px){
+  .header-center{display:none;}
+  .page-title{font-size:2.4rem;}
+  .ctrl-btn-txt{display:none;}
 }
-@keyframes loaderFade{to{opacity:0;pointer-events:none}}
-.loader-logo{
-  font-family:var(--font-display);font-size:3rem;
-  font-weight:300;letter-spacing:12px;
-  color:var(--gold);
-  animation:logoPulse 0.5s ease;
-}
-@keyframes logoPulse{from{opacity:0;letter-spacing:20px}to{opacity:1;letter-spacing:12px}}
-
-/* GOLD LINE SEPARATOR */
-.gold-line{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);
-  margin:32px 0;
-}
-
-/* ARROW right */
-.arrow-right{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border:1px solid var(--border);
-  color:var(--muted);font-size:.7rem;
-  transition:var(--transition);border-radius:50%;
-}
-.card-click:hover .arrow-right{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.2);}
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef, createContext, useContext } = React;
 
-const STORAGE_KEY = "replog_v2";
+/* ── STORAGE ─────────────────────────────────────────────────────────────── */
+const STORAGE_KEY = "replog_v3";
 const load = () => { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
 const save = (d) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch {} };
 const uid = () => Math.random().toString(36).slice(2, 9);
 const today = () => new Date().toISOString().slice(0, 10);
-const fmt = (d) => new Date(d + "T00:00:00").toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+const fmt = (d, locale) => new Date(d + "T00:00:00").toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" });
 
-// Animated counter
+/* ── TRANSLATIONS ────────────────────────────────────────────────────────── */
+const T = {
+  fr: {
+    appSub:"Suivi de Performance", friendsBtn:"Amis",
+    myPrograms:"MES PROGRAMMES", manageTrain:"Gérez vos plans d'entraînement",
+    noProg:"Aucun programme — créez votre premier", newProg:"+ Nouveau programme",
+    daysWk:"jours / sem.", exoCount:"exercices", sessLogged:"séances enregistrées",
+    selectSess:"Sélectionnez une séance", deleteProg:"Supprimer le programme",
+    addFirstExo:"Ajoutez votre premier exercice", addExo:"+ Ajouter un exercice",
+    renameDay:"✏ Renommer", pr:"PR", personalRec:"Record Personnel",
+    totalSets:"Séries totales", lastSess:"Dernière séance", sessions:"Séances",
+    sessHist:"Historique des séances", logSess:"+ Enregistrer séance",
+    noSessYet:"Aucune séance enregistrée", deleteExo:"Supprimer l'exercice",
+    logTitle:"Enregistrer Séance", date:"Date", sets:"Séries",
+    reps:"REPS", weightLbl:"POIDS (kg)", addSet:"+ Ajouter série",
+    saveSess:"Sauvegarder", cancel:"Annuler",
+    newProgTitle:"Nouveau Programme", progName:"Nom du programme",
+    progPlaceholder:"ex. PPL, Full Body, Push Pull Legs…", daysPerWk:"Jours par semaine",
+    createProg:"Créer le Programme",
+    friendsTitle:"AMIS", friendsSub:"Partagez vos séances et performances",
+    myProfile:"Mon Profil", myUsername:"Mon pseudo",
+    usernamePh:"Entrez votre pseudo…", save:"Sauvegarder",
+    shareCodeLbl:"Mon code de partage", generateCode:"Générer mon code",
+    copyCode:"Copier le code", copied:"Copié !",
+    shareHint:"Envoyez ce code à vos amis pour qu'ils vous ajoutent.",
+    addFriend:"Ajouter un ami", friendCodeLbl:"Code de l'ami",
+    friendCodePh:"Collez le code de votre ami…", add:"Ajouter",
+    invalidCode:"Code invalide — vérifiez et réessayez",
+    alreadyFriend:"Cet ami est déjà dans votre liste.",
+    cantAddSelf:"Vous ne pouvez pas vous ajouter vous-même.",
+    friendAdded:"Ami ajouté !",
+    noFriends:"Aucun ami pour l'instant", noFriendsHint:"Partagez votre code et ajoutez vos amis",
+    recentPRs:"Records récents", friendProgs:"Programmes",
+    removeFriend:"Retirer", volume:"Volume",
+    dark:"Sombre", light:"Clair", since:"depuis",
+    noProgs:"Aucun programme partagé",
+    delSessQ:"Supprimer cette séance ?", delExoQ:"Supprimer cet exercice ?", delProgQ:"Supprimer ce programme ?",
+    trainingDays:"jours d'entraînement",
+    exo:(n)=>`${n} exercice${n!==1?"s":""}`,
+    ses:(n)=>`${n} séance${n!==1?"s":""}`,
+    st:(n)=>`${n} série${n!==1?"s":""}`,
+  },
+  en: {
+    appSub:"Performance Tracking", friendsBtn:"Friends",
+    myPrograms:"MY PROGRAMS", manageTrain:"Manage your training plans",
+    noProg:"No program yet — create your first", newProg:"+ New Program",
+    daysWk:"days / week", exoCount:"exercises", sessLogged:"sessions logged",
+    selectSess:"Select a session", deleteProg:"Delete program",
+    addFirstExo:"Add your first exercise", addExo:"+ Add exercise",
+    renameDay:"✏ Rename", pr:"PR", personalRec:"Personal Record",
+    totalSets:"Total sets", lastSess:"Last session", sessions:"Sessions",
+    sessHist:"Session History", logSess:"+ Log session",
+    noSessYet:"No session logged yet", deleteExo:"Delete exercise",
+    logTitle:"Log Session", date:"Date", sets:"Sets",
+    reps:"REPS", weightLbl:"WEIGHT (kg)", addSet:"+ Add set",
+    saveSess:"Save Session", cancel:"Cancel",
+    newProgTitle:"New Program", progName:"Program name",
+    progPlaceholder:"e.g. PPL, Push Pull Legs, Full Body…", daysPerWk:"Days per week",
+    createProg:"Create Program",
+    friendsTitle:"FRIENDS", friendsSub:"Share your sessions and performances",
+    myProfile:"My Profile", myUsername:"My username",
+    usernamePh:"Enter your username…", save:"Save",
+    shareCodeLbl:"My share code", generateCode:"Generate my code",
+    copyCode:"Copy code", copied:"Copied!",
+    shareHint:"Send this code to your friends so they can add you.",
+    addFriend:"Add a friend", friendCodeLbl:"Friend code",
+    friendCodePh:"Paste your friend's share code…", add:"Add",
+    invalidCode:"Invalid code — please check and try again",
+    alreadyFriend:"This person is already in your friends list.",
+    cantAddSelf:"You cannot add yourself.",
+    friendAdded:"Friend added!",
+    noFriends:"No friends yet", noFriendsHint:"Share your code and add your friends",
+    recentPRs:"Recent PRs", friendProgs:"Programs",
+    removeFriend:"Remove", volume:"Volume",
+    dark:"Dark", light:"Light", since:"since",
+    noProgs:"No programs shared",
+    delSessQ:"Delete this session?", delExoQ:"Delete this exercise?", delProgQ:"Delete this program?",
+    trainingDays:"training days",
+    exo:(n)=>`${n} exercise${n!==1?"s":""}`,
+    ses:(n)=>`${n} session${n!==1?"s":""}`,
+    st:(n)=>`${n} set${n!==1?"s":""}`,
+  }
+};
+
+/* ── SHARE CODE ──────────────────────────────────────────────────────────── */
+const encodeShare = (userId, username, programs) => {
+  try {
+    const payload = { type:"replog_share", v:1, userId, username, programs, exportedAt:today() };
+    return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  } catch { return ""; }
+};
+const decodeShare = (code) => {
+  try {
+    const str = decodeURIComponent(escape(atob(code.trim())));
+    const obj = JSON.parse(str);
+    if (obj.type === "replog_share" && obj.userId && obj.username) return obj;
+    return null;
+  } catch { return null; }
+};
+
+/* ── COUNTER ─────────────────────────────────────────────────────────────── */
 function Counter({ value, unit = "" }) {
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
   useEffect(() => {
-    let start = 0, end = parseFloat(value) || 0, dur = 800;
+    let start = 0, end = parseFloat(value) || 0;
     if (ref.current) clearInterval(ref.current);
-    const step = end / (dur / 16);
+    const step = end / (800 / 16);
     ref.current = setInterval(() => {
       start += step;
       if (start >= end) { setDisplay(end); clearInterval(ref.current); }
@@ -459,113 +441,197 @@ function Counter({ value, unit = "" }) {
   return <>{display}{unit}</>;
 }
 
+/* ── APP ─────────────────────────────────────────────────────────────────── */
 function App() {
-  const [data, setData] = useState(() => load() || { programs: [] });
-  const [view, setView] = useState({ page: "home" });
+  const [data, setData] = useState(() => {
+    const s = load();
+    if (!s) return { programs:[], userId:uid(), username:"", friends:[] };
+    return { programs:s.programs||[], userId:s.userId||uid(), username:s.username||"", friends:s.friends||[] };
+  });
+  const [theme, setTheme] = useState(() => localStorage.getItem("replog_theme") || "dark");
+  const [lang, setLang]   = useState(() => localStorage.getItem("replog_lang")  || "fr");
+  const [view,  setView]  = useState({ page:"home" });
   const [modal, setModal] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // friends state
+  const [shareCode,  setShareCode]  = useState("");
+  const [copyState,  setCopyState]  = useState("");   // "ok" | ""
+  const [friendInput,setFriendInput]= useState("");
+  const [friendMsg,  setFriendMsg]  = useState({ text:"", ok:true });
+  const [usernameVal,setUsernameVal]= useState("");
+
   useEffect(() => { setTimeout(() => setLoading(false), 900); }, []);
   useEffect(() => { save(data); }, [data]);
+  useEffect(() => { document.documentElement.setAttribute("data-theme", theme); localStorage.setItem("replog_theme", theme); }, [theme]);
+  useEffect(() => { document.documentElement.lang = lang; localStorage.setItem("replog_lang", lang); }, [lang]);
+
+  const t = (key, ...args) => { const v = T[lang][key]; return typeof v === "function" ? v(...args) : (v ?? key); };
+  const locale = lang === "fr" ? "fr-FR" : "en-US";
+  const fmtD = (d) => fmt(d, locale);
 
   const upd = (fn) => setData(p => { const n = JSON.parse(JSON.stringify(p)); fn(n); return n; });
-  const prog = view.programId ? data.programs.find(p => p.id === view.programId) : null;
-  const day = prog && view.dayId ? prog.days.find(d => d.id === view.dayId) : null;
-  const exo = day && view.exoId ? day.exercises.find(e => e.id === view.exoId) : null;
-  const nav = (page, extra = {}) => setView({ page, ...extra });
 
+  const prog = view.programId ? data.programs.find(p => p.id === view.programId) : null;
+  const day  = prog && view.dayId ? prog.days.find(d => d.id === view.dayId) : null;
+  const exo  = day && view.exoId ? day.exercises.find(e => e.id === view.exoId) : null;
+  const nav  = (page, extra = {}) => setView({ page, ...extra });
   const closeModal = () => setModal(null);
 
+  /* Program ops */
   const createProgram = () => {
     if (!modal.name.trim()) return;
-    const days = Array.from({ length: modal.days }, (_, i) => ({ id: uid(), index: i, name: `Session ${i + 1}`, exercises: [] }));
-    upd(d => d.programs.push({ id: uid(), name: modal.name.trim(), daysPerWeek: modal.days, days, createdAt: today() }));
+    const days = Array.from({ length: modal.days }, (_, i) => ({ id:uid(), index:i, name:`Session ${i+1}`, exercises:[] }));
+    upd(d => d.programs.push({ id:uid(), name:modal.name.trim(), daysPerWeek:modal.days, days, createdAt:today() }));
     closeModal();
   };
-
   const deleteProgram = (pid) => { upd(d => { d.programs = d.programs.filter(p => p.id !== pid); }); nav("home"); };
-  const updateDayName = (dayId, name) => upd(d => { const p = d.programs.find(p => p.id === view.programId); p.days.find(dd => dd.id === dayId).name = name; });
+  const updateDayName = (dayId, name) => upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === dayId).name = name; });
 
   const addExercise = () => {
     if (!modal.name.trim()) return;
-    upd(d => { const p = d.programs.find(p => p.id === view.programId); const day = p.days.find(dd => dd.id === view.dayId); day.exercises.push({ id: uid(), name: modal.name.trim(), sessions: [] }); });
+    upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.push({ id:uid(), name:modal.name.trim(), sessions:[] }); });
     closeModal();
   };
-
   const deleteExercise = () => {
-    upd(d => { const p = d.programs.find(p => p.id === view.programId); const day = p.days.find(dd => dd.id === view.dayId); day.exercises = day.exercises.filter(e => e.id !== view.exoId); });
-    nav("day", { programId: view.programId, dayId: view.dayId });
+    upd(d => { const p = d.programs.find(p => p.id === view.programId); const dv = p.days.find(dd => dd.id === view.dayId); dv.exercises = dv.exercises.filter(e => e.id !== view.exoId); });
+    nav("day", { programId:view.programId, dayId:view.dayId });
   };
 
   const logSession = () => {
-    const validSets = modal.sets.filter(s => s.reps !== "" && s.weight !== "").map(s => ({ reps: Number(s.reps), weight: Number(s.weight) }));
+    const validSets = modal.sets.filter(s => s.reps !== "" && s.weight !== "").map(s => ({ reps:Number(s.reps), weight:Number(s.weight) }));
     if (!validSets.length) return;
-    upd(d => { const p = d.programs.find(p => p.id === view.programId); const day = p.days.find(dd => dd.id === view.dayId); const e = day.exercises.find(e => e.id === view.exoId); e.sessions.push({ id: uid(), date: modal.date, sets: validSets }); });
+    upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions.push({ id:uid(), date:modal.date, sets:validSets }); });
     closeModal();
   };
+  const deleteSession = (sid) => upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions = d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions.filter(s => s.id !== sid); });
 
-  const deleteSession = (sessionId) => upd(d => { const p = d.programs.find(p => p.id === view.programId); const day = p.days.find(dd => dd.id === view.dayId); const e = day.exercises.find(e => e.id === view.exoId); e.sessions = e.sessions.filter(s => s.id !== sessionId); });
-
-  const addSet = () => setModal(m => ({ ...m, sets: [...m.sets, { reps: "", weight: "" }] }));
-  const removeSet = (i) => setModal(m => ({ ...m, sets: m.sets.filter((_, idx) => idx !== i) }));
-  const updateSet = (i, f, v) => setModal(m => { const sets = [...m.sets]; sets[i] = { ...sets[i], [f]: v }; return { ...m, sets }; });
+  const addSet    = () => setModal(m => ({ ...m, sets:[...m.sets, { reps:"", weight:"" }] }));
+  const removeSet = (i) => setModal(m => ({ ...m, sets:m.sets.filter((_,idx) => idx!==i) }));
+  const updateSet = (i, f, v) => setModal(m => { const sets=[...m.sets]; sets[i]={...sets[i],[f]:v}; return {...m,sets}; });
 
   const isPR = (session, all) => {
     const mx = Math.max(...session.sets.map(s => s.weight));
-    const prior = all.filter(s => s.id !== session.id && new Date(s.date) <= new Date(session.date) && s.id !== session.id).flatMap(s => s.sets.map(st => st.weight));
-    const prevSessions = all.filter(s => s.id !== session.id);
-    if (!prevSessions.length) return true;
-    const prevMax = Math.max(...prevSessions.flatMap(s => s.sets.map(st => st.weight)));
-    return mx > prevMax;
+    const prev = all.filter(s => s.id !== session.id);
+    if (!prev.length) return true;
+    return mx > Math.max(...prev.flatMap(s => s.sets.map(st => st.weight)));
   };
-
   const openLog = () => {
     const last = exo?.sessions?.[exo.sessions.length - 1];
-    const sets = last ? last.sets.map(s => ({ reps: s.reps, weight: s.weight })) : [{ reps: "", weight: "" }];
-    setModal({ type: "log", date: today(), sets });
+    const sets = last ? last.sets.map(s => ({ reps:s.reps, weight:s.weight })) : [{ reps:"", weight:"" }];
+    setModal({ type:"log", date:today(), sets });
   };
 
+  /* Friends ops */
+  const generateShareCode = () => {
+    if (!data.username.trim()) { setShareCode(""); return; }
+    setShareCode(encodeShare(data.userId, data.username, data.programs));
+  };
+  const copyShareCode = async () => {
+    if (!shareCode) return;
+    try { await navigator.clipboard.writeText(shareCode); } catch {}
+    setCopyState("ok"); setTimeout(() => setCopyState(""), 2000);
+  };
+  const saveUsername = () => {
+    const name = (usernameVal || "").trim();
+    if (!name) return;
+    upd(d => { d.username = name; });
+    setUsernameVal("");
+    setShareCode(""); // invalidate old code
+  };
+  const addFriend = () => {
+    setFriendMsg({ text:"", ok:true });
+    const decoded = decodeShare(friendInput);
+    if (!decoded) { setFriendMsg({ text:t("invalidCode"), ok:false }); return; }
+    if (decoded.userId === data.userId) { setFriendMsg({ text:t("cantAddSelf"), ok:false }); return; }
+    if (data.friends.some(f => f.id === decoded.userId)) { setFriendMsg({ text:t("alreadyFriend"), ok:false }); return; }
+    upd(d => d.friends.push({ id:decoded.userId, username:decoded.username, programs:decoded.programs, addedAt:today() }));
+    setFriendInput("");
+    setFriendMsg({ text:t("friendAdded"), ok:true });
+    setTimeout(() => setFriendMsg({ text:"", ok:true }), 3000);
+  };
+  const removeFriend = (fid) => upd(d => { d.friends = d.friends.filter(f => f.id !== fid); });
+
+  const getFriendPRs = (friend) => {
+    const prs = [];
+    (friend.programs||[]).forEach(prog => (prog.days||[]).forEach(day => (day.exercises||[]).forEach(e => {
+      const sessions = e.sessions || [];
+      [...sessions].reverse().forEach(session => {
+        if (!session.sets?.length) return;
+        const mx = Math.max(...session.sets.map(s => s.weight));
+        const prev = sessions.filter(s => s.id !== session.id);
+        const prFlag = !prev.length || mx > Math.max(...prev.flatMap(s => s.sets.map(st => st.weight)));
+        if (prFlag && mx > 0) prs.push({ exo:e.name, weight:mx, date:session.date, prog:prog.name });
+      });
+    })));
+    return prs.sort((a,b) => b.date.localeCompare(a.date)).slice(0,5);
+  };
+
+  /* ── RENDER ── */
   return (
     <>
       {loading && <div className="loader"><div className="loader-logo">TrackFit</div></div>}
-
       <div className="app">
+
         {/* HEADER */}
         <header className="header">
-          <div>
+          <div className="header-left">
             <div className="logo" onClick={() => nav("home")}>Track<span>Fit</span></div>
-            <div className="logo-sub">Performance Tracking</div>
+            <div className="logo-sub">{t("appSub")}</div>
           </div>
-          {view.page !== "home" && (
-            <div className="breadcrumb">
-              <span className="bc-link" onClick={() => nav("home")}>Programs</span>
-              {prog && <><span className="bc-sep">›</span><span className="bc-link" onClick={() => nav("program", { programId: prog.id })}>{prog.name}</span></>}
-              {day && <><span className="bc-sep">›</span><span className="bc-link" onClick={() => nav("day", { programId: prog.id, dayId: day.id })}>{day.name}</span></>}
-              {exo && <><span className="bc-sep">›</span><span style={{color:"var(--muted)"}}>{exo.name}</span></>}
-            </div>
-          )}
+
+          <div className="header-center">
+            {view.page !== "home" && view.page !== "friends" && (
+              <div className="breadcrumb">
+                <span className="bc-link" onClick={() => nav("home")}>Programs</span>
+                {prog && <><span className="bc-sep">›</span><span className="bc-link" onClick={() => nav("program",{programId:prog.id})}>{prog.name}</span></>}
+                {day  && <><span className="bc-sep">›</span><span className="bc-link" onClick={() => nav("day",{programId:prog.id,dayId:day.id})}>{day.name}</span></>}
+                {exo  && <><span className="bc-sep">›</span><span style={{color:"var(--muted)"}}>{exo.name}</span></>}
+              </div>
+            )}
+          </div>
+
+          <div className="header-right">
+            {/* Friends */}
+            <button className={`ctrl-btn friends-btn ${view.page==="friends"?"is-active":""}`} onClick={() => nav(view.page==="friends"?"home":"friends")} title={t("friendsBtn")}>
+              👥 <span className="ctrl-btn-txt" style={{fontSize:".62rem",letterSpacing:"2px"}}>{t("friendsBtn")}</span>
+              {data.friends.length > 0 && <span className="friends-dot" />}
+            </button>
+
+            <div className="ctrl-sep" />
+
+            {/* Language */}
+            <button className={`ctrl-btn ${lang==="fr"?"is-active":""}`} onClick={() => setLang("fr")}>FR</button>
+            <button className={`ctrl-btn ${lang==="en"?"is-active":""}`} onClick={() => setLang("en")}>EN</button>
+
+            <div className="ctrl-sep" />
+
+            {/* Theme */}
+            <button className="ctrl-btn" onClick={() => setTheme(t => t==="dark"?"light":"dark")} title={theme==="dark"?t("light"):t("dark")}>
+              {theme==="dark" ? "☀" : "🌙"}
+            </button>
+          </div>
         </header>
 
-        {/* HOME */}
+        {/* ── HOME ── */}
         {view.page === "home" && (
           <div className="fade-in">
             <div className="accent-bar" />
-            <div className="page-title">MY PROGRAMS</div>
-            <div className="page-sub">Manage your training plans</div>
-
+            <div className="page-title">{t("myPrograms")}</div>
+            <div className="page-sub">{t("manageTrain")}</div>
             {data.programs.length === 0 ? (
-              <div className="empty"><div className="empty-icon">🏆</div><div className="empty-text">No program yet — create your first</div></div>
+              <div className="empty"><div className="empty-icon">🏆</div><div className="empty-text">{t("noProg")}</div></div>
             ) : (
               <div className="stagger">
                 {data.programs.map(p => (
-                  <div key={p.id} className="card card-click" onClick={() => nav("program", { programId: p.id })}>
+                  <div key={p.id} className="card card-click" onClick={() => nav("program",{programId:p.id})}>
                     <div className="card-header">
                       <div>
                         <div className="card-title">{p.name}</div>
-                        <div className="card-meta" style={{marginTop:8}}>
-                          <span className="tag tag-gold">{p.daysPerWeek} days / week</span>
-                          <span className="tag">{p.days.reduce((a, d) => a + d.exercises.length, 0)} exercises</span>
-                          <span className="tag">since {fmt(p.createdAt)}</span>
+                        <div style={{marginTop:8}}>
+                          <span className="tag tag-gold">{p.daysPerWeek} {t("daysWk")}</span>
+                          <span className="tag">{p.days.reduce((a,d)=>a+d.exercises.length,0)} {t("exoCount")}</span>
+                          <span className="tag">{t("since")} {fmtD(p.createdAt)}</span>
                         </div>
                       </div>
                       <div className="arrow-right">›</div>
@@ -575,56 +641,56 @@ function App() {
               </div>
             )}
             <div style={{marginTop:28}}>
-              <button className="btn btn-primary" onClick={() => setModal({ type: "createProgram", name: "", days: 4 })}>+ New Program</button>
+              <button className="btn btn-primary" onClick={() => setModal({type:"createProgram",name:"",days:4})}>{t("newProg")}</button>
             </div>
           </div>
         )}
 
-        {/* PROGRAM */}
+        {/* ── PROGRAM ── */}
         {view.page === "program" && prog && (
           <div className="fade-in">
             <div className="accent-bar" />
             <div className="page-title">{prog.name}</div>
-            <div className="page-sub">{prog.daysPerWeek} training days per week</div>
+            <div className="page-sub">{prog.daysPerWeek} {t("trainingDays")}</div>
             <div className="stats-row stagger">
-              <div className="stat-box"><div className="stat-value"><Counter value={prog.daysPerWeek} /></div><div className="stat-label">Days / week</div></div>
-              <div className="stat-box"><div className="stat-value"><Counter value={prog.days.reduce((a, d) => a + d.exercises.length, 0)} /></div><div className="stat-label">Exercises</div></div>
-              <div className="stat-box"><div className="stat-value"><Counter value={prog.days.reduce((a, d) => a + d.exercises.reduce((b, e) => b + e.sessions.length, 0), 0)} /></div><div className="stat-label">Sessions logged</div></div>
+              <div className="stat-box"><div className="stat-value"><Counter value={prog.daysPerWeek} /></div><div className="stat-label">{t("daysWk")}</div></div>
+              <div className="stat-box"><div className="stat-value"><Counter value={prog.days.reduce((a,d)=>a+d.exercises.length,0)} /></div><div className="stat-label">{t("exoCount")}</div></div>
+              <div className="stat-box"><div className="stat-value"><Counter value={prog.days.reduce((a,d)=>a+d.exercises.reduce((b,e)=>b+e.sessions.length,0),0)} /></div><div className="stat-label">{t("sessLogged")}</div></div>
             </div>
-            <div style={{fontSize:".6rem",letterSpacing:"3px",textTransform:"uppercase",color:"var(--muted)",marginBottom:14,fontWeight:300}}>Select a session</div>
+            <div style={{fontSize:".6rem",letterSpacing:"3px",textTransform:"uppercase",color:"var(--muted)",marginBottom:14,fontWeight:300}}>{t("selectSess")}</div>
             <div className="days-grid stagger">
               {prog.days.map(d => (
-                <div key={d.id} className="day-card" onClick={() => nav("day", { programId: prog.id, dayId: d.id })}>
+                <div key={d.id} className="day-card" onClick={() => nav("day",{programId:prog.id,dayId:d.id})}>
                   <div className="day-card-name">{d.name}</div>
-                  <div className="day-card-count">{d.exercises.length} exercise{d.exercises.length !== 1 ? "s" : ""}</div>
-                  <div className="day-num-bg">{d.index + 1}</div>
+                  <div className="day-card-count">{t("exo",d.exercises.length)}</div>
+                  <div className="day-num-bg">{d.index+1}</div>
                 </div>
               ))}
             </div>
             <div className="gold-line" />
-            <button className="btn btn-danger btn-sm" onClick={() => { if (window.confirm("Delete this program?")) deleteProgram(prog.id); }}>Delete program</button>
+            <button className="btn btn-danger btn-sm" onClick={() => { if (window.confirm(t("delProgQ"))) deleteProgram(prog.id); }}>{t("deleteProg")}</button>
           </div>
         )}
 
-        {/* DAY */}
+        {/* ── DAY ── */}
         {view.page === "day" && day && (
           <div className="fade-in">
             <div className="accent-bar" />
             <div className="page-title">{day.name}</div>
-            <div className="page-sub">{prog.name} · {day.exercises.length} exercise{day.exercises.length !== 1 ? "s" : ""}</div>
-            <EditableName value={day.name} onChange={name => updateDayName(day.id, name)} />
+            <div className="page-sub">{prog.name} · {t("exo",day.exercises.length)}</div>
+            <EditableName value={day.name} onChange={name => updateDayName(day.id, name)} t={t} />
             {day.exercises.length === 0 ? (
-              <div className="empty"><div className="empty-icon">📋</div><div className="empty-text">Add your first exercise</div></div>
+              <div className="empty"><div className="empty-icon">📋</div><div className="empty-text">{t("addFirstExo")}</div></div>
             ) : (
               <div className="card stagger" style={{padding:"0 28px"}}>
                 {day.exercises.map(e => {
-                  const last = e.sessions[e.sessions.length - 1];
-                  const total = e.sessions.reduce((a, s) => a + s.sets.length, 0);
+                  const last = e.sessions[e.sessions.length-1];
+                  const total = e.sessions.reduce((a,s)=>a+s.sets.length,0);
                   return (
-                    <div key={e.id} className="exo-row" onClick={() => nav("exercise", { programId: prog.id, dayId: day.id, exoId: e.id })}>
+                    <div key={e.id} className="exo-row" onClick={() => nav("exercise",{programId:prog.id,dayId:day.id,exoId:e.id})}>
                       <div>
                         <div className="exo-name">{e.name}</div>
-                        <div className="exo-info">{e.sessions.length} session{e.sessions.length !== 1 ? "s" : ""} · {total} set{total !== 1 ? "s" : ""}{last ? ` · last: ${fmt(last.date)}` : ""}</div>
+                        <div className="exo-info">{t("ses",e.sessions.length)} · {t("st",total)}{last?` · ${t("since")} ${fmtD(last.date)}`:""}</div>
                       </div>
                       <span className="exo-arrow">›</span>
                     </div>
@@ -633,69 +699,69 @@ function App() {
               </div>
             )}
             <div style={{marginTop:24}}>
-              <button className="btn btn-primary" onClick={() => setModal({ type: "createExo", name: "" })}>+ Add exercise</button>
+              <button className="btn btn-primary" onClick={() => setModal({type:"createExo",name:""})}>{t("addExo")}</button>
             </div>
           </div>
         )}
 
-        {/* EXERCISE */}
+        {/* ── EXERCISE ── */}
         {view.page === "exercise" && exo && (() => {
           const allW = exo.sessions.flatMap(s => s.sets.map(st => st.weight));
           const maxW = allW.length ? Math.max(...allW) : 0;
-          const totalSets = exo.sessions.reduce((a, s) => a + s.sets.length, 0);
-          const lastS = exo.sessions[exo.sessions.length - 1];
-          const lastMax = lastS ? Math.max(...lastS.sets.map(s => s.weight)) : 0;
+          const totalSets = exo.sessions.reduce((a,s)=>a+s.sets.length,0);
+          const lastS = exo.sessions[exo.sessions.length-1];
+          const lastMax = lastS ? Math.max(...lastS.sets.map(s=>s.weight)) : 0;
           return (
             <div className="fade-in">
               <div className="accent-bar" />
               <div className="page-title">{exo.name}</div>
-              <div className="page-sub">{day.name} · {exo.sessions.length} session{exo.sessions.length !== 1 ? "s" : ""}</div>
+              <div className="page-sub">{day.name} · {t("ses",exo.sessions.length)}</div>
               {exo.sessions.length > 0 && (
                 <div className="stats-row stagger">
-                  <div className="stat-box"><div className="stat-value"><Counter value={maxW} /><span className="stat-unit"> kg</span></div><div className="stat-label">Personal Record</div></div>
-                  <div className="stat-box"><div className="stat-value"><Counter value={totalSets} /></div><div className="stat-label">Total sets</div></div>
-                  <div className="stat-box"><div className="stat-value"><Counter value={lastMax} /><span className="stat-unit"> kg</span></div><div className="stat-label">Last session</div></div>
-                  <div className="stat-box"><div className="stat-value"><Counter value={exo.sessions.length} /></div><div className="stat-label">Sessions</div></div>
+                  <div className="stat-box"><div className="stat-value"><Counter value={maxW} /><span className="stat-unit"> kg</span></div><div className="stat-label">{t("personalRec")}</div></div>
+                  <div className="stat-box"><div className="stat-value"><Counter value={totalSets} /></div><div className="stat-label">{t("totalSets")}</div></div>
+                  <div className="stat-box"><div className="stat-value"><Counter value={lastMax} /><span className="stat-unit"> kg</span></div><div className="stat-label">{t("lastSess")}</div></div>
+                  <div className="stat-box"><div className="stat-value"><Counter value={exo.sessions.length} /></div><div className="stat-label">{t("sessions")}</div></div>
                 </div>
               )}
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
-                <div style={{fontSize:".6rem",letterSpacing:"3px",textTransform:"uppercase",color:"var(--muted)",fontWeight:300}}>Session History</div>
-                <button className="btn btn-primary btn-sm" onClick={openLog}>+ Log session</button>
+                <div style={{fontSize:".6rem",letterSpacing:"3px",textTransform:"uppercase",color:"var(--muted)",fontWeight:300}}>{t("sessHist")}</div>
+                <button className="btn btn-primary btn-sm" onClick={openLog}>{t("logSess")}</button>
               </div>
               {exo.sessions.length === 0 ? (
-                <div className="empty"><div className="empty-icon">📊</div><div className="empty-text">No session logged yet</div></div>
+                <div className="empty"><div className="empty-icon">📊</div><div className="empty-text">{t("noSessYet")}</div></div>
               ) : (
                 <div className="stagger">
                   {[...exo.sessions].reverse().map(session => {
                     const pr = isPR(session, exo.sessions);
-                    const mW = Math.max(...session.sets.map(s => s.weight));
-                    const tR = session.sets.reduce((a, s) => a + s.reps, 0);
-                    const vol = session.sets.reduce((a, s) => a + s.reps * s.weight, 0);
+                    const mW  = Math.max(...session.sets.map(s=>s.weight));
+                    const tR  = session.sets.reduce((a,s)=>a+s.reps,0);
+                    const vol = session.sets.reduce((a,s)=>a+s.reps*s.weight,0);
                     return (
                       <div key={session.id} className="history-session">
                         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
                           <div className="history-date">
-                            {fmt(session.date)}
-                            {pr && <span className="pr-badge">⚡ PR</span>}
+                            {fmtD(session.date)}
+                            {pr && <span className="pr-badge">⚡ {t("pr")}</span>}
                           </div>
-                          <button className="btn-icon" onClick={() => { if (window.confirm("Delete this session?")) deleteSession(session.id); }}>✕</button>
+                          <button className="btn-icon" onClick={() => { if (window.confirm(t("delSessQ"))) deleteSession(session.id); }}>✕</button>
                         </div>
                         <table className="log-table">
-                          <thead><tr><th>Set</th><th>Reps</th><th>Weight</th><th>Volume</th></tr></thead>
+                          <thead><tr><th>Set</th><th>{t("reps")}</th><th>{t("weightLbl")}</th><th>{t("volume")}</th></tr></thead>
                           <tbody>
-                            {session.sets.map((set, i) => (
+                            {session.sets.map((set,i) => (
                               <tr key={i}>
-                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{i + 1}</td>
+                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{i+1}</td>
                                 <td className="num">{set.reps}</td>
                                 <td className="num">{set.weight} kg</td>
-                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{(set.reps * set.weight).toLocaleString("fr")} kg</td>
+                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{(set.reps*set.weight).toLocaleString(locale)} kg</td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                         <div style={{fontSize:".6rem",color:"var(--muted2)",display:"flex",gap:20,flexWrap:"wrap",fontWeight:300}}>
-                          <span>{session.sets.length} sets · {tR} total reps · {mW} kg max</span>
-                          <span style={{color:"var(--gold)",opacity:.7}}>Volume: {vol.toLocaleString("fr")} kg</span>
+                          <span>{t("st",session.sets.length)} · {tR} reps · {mW} kg max</span>
+                          <span style={{color:"var(--gold)",opacity:.7}}>{t("volume")}: {vol.toLocaleString(locale)} kg</span>
                         </div>
                       </div>
                     );
@@ -703,34 +769,161 @@ function App() {
                 </div>
               )}
               <div className="gold-line" />
-              <button className="btn btn-danger btn-sm" onClick={() => { if (window.confirm("Delete this exercise?")) deleteExercise(); }}>Delete exercise</button>
+              <button className="btn btn-danger btn-sm" onClick={() => { if (window.confirm(t("delExoQ"))) deleteExercise(); }}>{t("deleteExo")}</button>
             </div>
           );
         })()}
+
+        {/* ── FRIENDS ── */}
+        {view.page === "friends" && (
+          <div className="fade-in">
+            <div className="accent-bar" />
+            <div className="page-title">{t("friendsTitle")}</div>
+            <div className="page-sub">{t("friendsSub")}</div>
+
+            {/* My Profile */}
+            <div className="profile-section">
+              <div className="section-title">👤 {t("myProfile")}</div>
+              <div className="form-group">
+                <label>{t("myUsername")}</label>
+                <div style={{display:"flex",gap:10}}>
+                  <input className="input" placeholder={data.username || t("usernamePh")}
+                    value={usernameVal} onChange={e => setUsernameVal(e.target.value)}
+                    onKeyDown={e => e.key==="Enter" && saveUsername()} />
+                  <button className="btn btn-primary btn-sm" onClick={saveUsername} disabled={!usernameVal.trim()}>{t("save")}</button>
+                </div>
+                {data.username && <div style={{marginTop:8,fontSize:".62rem",color:"var(--muted)",letterSpacing:"1px"}}>✓ {data.username}</div>}
+              </div>
+
+              <div className="form-group" style={{marginBottom:0}}>
+                <label>{t("shareCodeLbl")}</label>
+                <div style={{fontSize:".62rem",color:"var(--muted2)",marginBottom:10,letterSpacing:"0",lineHeight:1.5}}>{t("shareHint")}</div>
+                {!data.username ? (
+                  <div style={{fontSize:".62rem",color:"var(--red)",letterSpacing:"1px"}}>⚠ {lang==="fr"?"Définissez d'abord votre pseudo.":"Set your username first."}</div>
+                ) : !shareCode ? (
+                  <button className="btn btn-ghost btn-sm" onClick={generateShareCode}>{t("generateCode")}</button>
+                ) : (
+                  <>
+                    <div className="share-code-box" onClick={copyShareCode} title={t("copyCode")}>{shareCode}</div>
+                    <div style={{display:"flex",gap:10,alignItems:"center",marginTop:8}}>
+                      <button className="btn btn-ghost btn-sm" onClick={copyShareCode}>{t("copyCode")}</button>
+                      <button className="btn btn-ghost btn-sm" style={{padding:"7px 12px"}} onClick={() => { setShareCode(""); setTimeout(generateShareCode, 50); }}>↺</button>
+                      {copyState==="ok" && <span className="msg-ok">✓ {t("copied")}</span>}
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Add Friend */}
+            <div className="profile-section">
+              <div className="section-title">➕ {t("addFriend")}</div>
+              <div className="form-group" style={{marginBottom:0}}>
+                <label>{t("friendCodeLbl")}</label>
+                <div style={{display:"flex",gap:10}}>
+                  <input className="input" placeholder={t("friendCodePh")} value={friendInput}
+                    onChange={e => setFriendInput(e.target.value)}
+                    onKeyDown={e => e.key==="Enter" && addFriend()} />
+                  <button className="btn btn-primary btn-sm" onClick={addFriend} disabled={!friendInput.trim()}>{t("add")}</button>
+                </div>
+                {friendMsg.text && (
+                  <div style={{marginTop:10,animation:"fadeIn .2s ease"}} className={friendMsg.ok ? "msg-ok" : "msg-err"}>
+                    {friendMsg.ok ? "✓" : "✕"} {friendMsg.text}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Friends List */}
+            <div className="section-title" style={{marginTop:32}}>👥 {t("friendsBtn")} <span style={{color:"var(--muted)",fontSize:".55rem"}}>{data.friends.length}</span></div>
+
+            {data.friends.length === 0 ? (
+              <div className="empty" style={{padding:"50px 20px"}}>
+                <div className="empty-icon">🤝</div>
+                <div className="empty-text">{t("noFriends")}</div>
+                <div style={{fontSize:".6rem",color:"var(--muted2)",marginTop:8,letterSpacing:"2px"}}>{t("noFriendsHint")}</div>
+              </div>
+            ) : (
+              <div className="stagger">
+                {data.friends.map(friend => {
+                  const prs = getFriendPRs(friend);
+                  const totalExos = (friend.programs||[]).reduce((a,p)=>a+p.days.reduce((b,d)=>b+d.exercises.length,0),0);
+                  const totalSess = (friend.programs||[]).reduce((a,p)=>a+p.days.reduce((b,d)=>b+d.exercises.reduce((c,e)=>c+e.sessions.length,0),0),0);
+                  return (
+                    <div key={friend.id} className="friend-card">
+                      <div className="friend-header">
+                        <div style={{display:"flex",alignItems:"center"}}>
+                          <div className="friend-avatar">{(friend.username||"?")[0].toUpperCase()}</div>
+                          <div>
+                            <div className="friend-name">{friend.username}</div>
+                            <div className="friend-sub">{t("exo",totalExos)} · {t("ses",totalSess)} · {t("since")} {fmtD(friend.addedAt)}</div>
+                          </div>
+                        </div>
+                        <button className="btn btn-danger btn-sm" onClick={() => removeFriend(friend.id)}>{t("removeFriend")}</button>
+                      </div>
+
+                      <div className="friend-body">
+                        {/* PRs */}
+                        {prs.length > 0 && (
+                          <>
+                            <div className="friend-section-label">⚡ {t("recentPRs")}</div>
+                            {prs.map((pr,i) => (
+                              <div key={i} className="pr-item">
+                                <div style={{fontSize:"1.1rem"}}>🏅</div>
+                                <div className="pr-info">
+                                  <div className="pr-exo">{pr.exo}</div>
+                                  <div className="pr-detail">{pr.prog} · {fmtD(pr.date)}</div>
+                                </div>
+                                <div className="pr-weight">{pr.weight}<span style={{fontSize:".85rem",color:"var(--muted)"}}> kg</span></div>
+                              </div>
+                            ))}
+                          </>
+                        )}
+
+                        {/* Programs */}
+                        {(friend.programs||[]).length > 0 && (
+                          <>
+                            <div className="friend-section-label">📋 {t("friendProgs")}</div>
+                            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                              {(friend.programs||[]).map(p => <span key={p.id} className="tag tag-gold">{p.name}</span>)}
+                            </div>
+                          </>
+                        )}
+
+                        {prs.length === 0 && (friend.programs||[]).length === 0 && (
+                          <div style={{fontSize:".62rem",color:"var(--muted2)",padding:"12px 0",letterSpacing:"1px"}}>{t("noProgs")}</div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* MODAL: Create Program */}
       {modal?.type === "createProgram" && (
-        <div className="overlay" onClick={e => e.target === e.currentTarget && closeModal()}>
+        <div className="overlay" onClick={e => e.target===e.currentTarget && closeModal()}>
           <div className="modal">
-            <div className="modal-title">New Program</div>
+            <div className="modal-title">{t("newProgTitle")}</div>
             <div className="form-group">
-              <label>Program name</label>
-              <input className="input" placeholder="e.g. PPL, Push Pull Legs, Full Body…" value={modal.name}
-                onChange={e => setModal(m => ({ ...m, name: e.target.value }))}
-                onKeyDown={e => e.key === "Enter" && createProgram()} autoFocus />
+              <label>{t("progName")}</label>
+              <input className="input" placeholder={t("progPlaceholder")} value={modal.name}
+                onChange={e => setModal(m=>({...m,name:e.target.value}))}
+                onKeyDown={e => e.key==="Enter" && createProgram()} autoFocus />
             </div>
             <div className="form-group">
-              <label>Days per week — <span style={{color:"var(--gold)",fontWeight:500}}>{modal.days} days</span></label>
-              <input type="range" min={1} max={7} value={modal.days}
-                onChange={e => setModal(m => ({ ...m, days: Number(e.target.value) }))} />
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:".58rem",color:"var(--muted)",marginTop:8,letterSpacing:"1px"}}>
-                {[1,2,3,4,5,6,7].map(n => <span key={n}>{n}</span>)}
+              <label>{t("daysPerWk")} — <span style={{color:"var(--gold)",fontWeight:500}}>{modal.days} {t("daysWk")}</span></label>
+              <input type="range" min={1} max={7} value={modal.days} onChange={e => setModal(m=>({...m,days:Number(e.target.value)}))} />
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:".58rem",color:"var(--muted)",marginTop:8}}>
+                {[1,2,3,4,5,6,7].map(n=><span key={n}>{n}</span>)}
               </div>
             </div>
             <div style={{display:"flex",gap:10,marginTop:28}}>
-              <button className="btn btn-primary" onClick={createProgram}>Create Program</button>
-              <button className="btn btn-ghost" onClick={closeModal}>Cancel</button>
+              <button className="btn btn-primary" onClick={createProgram}>{t("createProg")}</button>
+              <button className="btn btn-ghost"   onClick={closeModal}>{t("cancel")}</button>
             </div>
           </div>
         </div>
@@ -738,47 +931,37 @@ function App() {
 
       {/* MODAL: Add Exercise */}
       {modal?.type === "createExo" && (
-        <ExercisePickerModal
-          modal={modal}
-          setModal={setModal}
-          onAdd={addExercise}
-          onClose={closeModal}
-        />
+        <ExercisePickerModal modal={modal} setModal={setModal} onAdd={addExercise} onClose={closeModal} t={t} />
       )}
 
       {/* MODAL: Log Session */}
       {modal?.type === "log" && (
-        <div className="overlay" onClick={e => e.target === e.currentTarget && closeModal()}>
+        <div className="overlay" onClick={e => e.target===e.currentTarget && closeModal()}>
           <div className="modal" style={{maxWidth:500}}>
-            <div className="modal-title">Log Session</div>
+            <div className="modal-title">{t("logTitle")}</div>
             <div className="form-group">
-              <label>Date</label>
-              <input type="date" className="input" value={modal.date}
-                onChange={e => setModal(m => ({ ...m, date: e.target.value }))} />
+              <label>{t("date")}</label>
+              <input type="date" className="input" value={modal.date} onChange={e => setModal(m=>({...m,date:e.target.value}))} />
             </div>
             <div style={{margin:"24px 0 10px"}}>
-              <label>Sets</label>
+              <label>{t("sets")}</label>
               <div style={{display:"grid",gridTemplateColumns:"36px 1fr 1fr auto",gap:8,marginBottom:10}}>
-                <div></div>
-                <div style={{fontSize:".58rem",color:"var(--muted)",letterSpacing:"2px"}}>REPS</div>
-                <div style={{fontSize:".58rem",color:"var(--muted)",letterSpacing:"2px"}}>WEIGHT (kg)</div>
-                <div></div>
+                <div/><div style={{fontSize:".58rem",color:"var(--muted)",letterSpacing:"2px"}}>{t("reps")}</div>
+                <div style={{fontSize:".58rem",color:"var(--muted)",letterSpacing:"2px"}}>{t("weightLbl")}</div><div/>
               </div>
-              {modal.sets.map((set, i) => (
-                <div key={i} className="set-row" style={{animation:`fadeIn 0.2s ease ${i*0.04}s both`}}>
-                  <div className="set-num">{i + 1}</div>
-                  <input type="number" min={0} className="input" placeholder="12" value={set.reps}
-                    onChange={e => updateSet(i, "reps", e.target.value)} />
-                  <input type="number" min={0} step={0.5} className="input" placeholder="80" value={set.weight}
-                    onChange={e => updateSet(i, "weight", e.target.value)} />
-                  <button className="btn-icon" onClick={() => removeSet(i)}>✕</button>
+              {modal.sets.map((set,i)=>(
+                <div key={i} className="set-row" style={{animation:`fadeIn .2s ease ${i*.04}s both`}}>
+                  <div className="set-num">{i+1}</div>
+                  <input type="number" min={0} className="input" placeholder="12" value={set.reps} onChange={e=>updateSet(i,"reps",e.target.value)} />
+                  <input type="number" min={0} step={0.5} className="input" placeholder="80" value={set.weight} onChange={e=>updateSet(i,"weight",e.target.value)} />
+                  <button className="btn-icon" onClick={()=>removeSet(i)}>✕</button>
                 </div>
               ))}
-              <button className="btn btn-ghost btn-sm" onClick={addSet} style={{marginTop:10}}>+ Add set</button>
+              <button className="btn btn-ghost btn-sm" onClick={addSet} style={{marginTop:10}}>{t("addSet")}</button>
             </div>
             <div style={{display:"flex",gap:10,marginTop:20}}>
-              <button className="btn btn-primary" onClick={logSession}>Save Session</button>
-              <button className="btn btn-ghost" onClick={closeModal}>Cancel</button>
+              <button className="btn btn-primary" onClick={logSession}>{t("saveSess")}</button>
+              <button className="btn btn-ghost" onClick={closeModal}>{t("cancel")}</button>
             </div>
           </div>
         </div>
@@ -787,166 +970,93 @@ function App() {
   );
 }
 
-function EditableName({ value, onChange }) {
+/* ── EDITABLE NAME ───────────────────────────────────────────────────────── */
+function EditableName({ value, onChange, t }) {
   const [editing, setEditing] = useState(false);
   const [val, setVal] = useState(value);
   const save = () => { onChange(val); setEditing(false); };
   if (editing) return (
     <div className="input-row" style={{marginBottom:28}}>
-      <input className="input" value={val}
-        onChange={e => setVal(e.target.value)}
-        onKeyDown={e => { if (e.key === "Enter") save(); if (e.key === "Escape") setEditing(false); }}
-        autoFocus />
-      <button className="btn btn-primary btn-sm" onClick={save}>Save</button>
-      <button className="btn btn-ghost btn-sm" onClick={() => setEditing(false)}>✕</button>
+      <input className="input" value={val} onChange={e=>setVal(e.target.value)}
+        onKeyDown={e=>{if(e.key==="Enter")save();if(e.key==="Escape")setEditing(false);}} autoFocus />
+      <button className="btn btn-primary btn-sm" onClick={save}>{t("save")}</button>
+      <button className="btn btn-ghost btn-sm" onClick={()=>setEditing(false)}>✕</button>
     </div>
   );
-  return <div style={{marginBottom:28}}><button className="btn btn-ghost btn-sm" onClick={() => { setVal(value); setEditing(true); }}>✏ Rename session</button></div>;
+  return <div style={{marginBottom:28}}><button className="btn btn-ghost btn-sm" onClick={()=>{setVal(value);setEditing(true);}}>{t("renameDay")}</button></div>;
 }
 
-// ─── EXERCISE LIBRARY ────────────────────────────────────────────────────────
+/* ── EXERCISE LIBRARY ────────────────────────────────────────────────────── */
 const LIBRARY = [
-  {
-    group: "🫀 Chest", color: "#e05c7a",
-    exercises: ["Bench Press","Incline Bench Press","Decline Bench Press","Dumbbell Fly","Cable Fly","Chest Dips","Push-up","Incline Dumbbell Press","Machine Chest Press","Pec Deck","Low Cable Fly","Svend Press"]
-  },
-  {
-    group: "🔙 Back", color: "#5c9ee0",
-    exercises: ["Deadlift","Pull-up","Chin-up","Lat Pulldown","Seated Cable Row","Barbell Row","T-Bar Row","Single Arm Row","Face Pull","Straight Arm Pulldown","Chest Supported Row","Rack Pull","Good Morning","Hyperextension"]
-  },
-  {
-    group: "💪 Shoulders", color: "#a05ce0",
-    exercises: ["Military Press","Dumbbell Shoulder Press","Lateral Raise","Front Raise","Rear Delt Fly","Arnold Press","Upright Row","Cable Lateral Raise","Machine Shoulder Press","Barbell Shrug","Dumbbell Shrug","Bradford Press"]
-  },
-  {
-    group: "💪 Biceps", color: "#5ce0b8",
-    exercises: ["Barbell Curl","Dumbbell Curl","Hammer Curl","Preacher Curl","Cable Curl","Concentration Curl","Incline Dumbbell Curl","Spider Curl","Zottman Curl","Reverse Curl","21s"]
-  },
-  {
-    group: "💪 Triceps", color: "#e0a05c",
-    exercises: ["Tricep Dips","Skull Crusher","Cable Pushdown","Rope Pushdown","Overhead Extension","Close Grip Bench Press","Diamond Push-up","Kickback","French Press","JM Press"]
-  },
-  {
-    group: "🦵 Legs", color: "#5ce05c",
-    exercises: ["Squat","Front Squat","Leg Press","Romanian Deadlift","Leg Curl","Leg Extension","Bulgarian Split Squat","Hack Squat","Lunges","Walking Lunges","Hip Thrust","Glute Bridge","Calf Raise","Seated Calf Raise","Sumo Squat","Box Squat","Step-up","Nordic Curl"]
-  },
-  {
-    group: "🔥 Core", color: "#e0d45c",
-    exercises: ["Plank","Crunch","Sit-up","Leg Raise","Hanging Leg Raise","Cable Crunch","Russian Twist","Ab Wheel","Mountain Climber","Bicycle Crunch","Side Plank","Hollow Body Hold","Dragon Flag","Toes to Bar"]
-  },
-  {
-    group: "🏃 Cardio", color: "#5cb8e0",
-    exercises: ["Running","Cycling","Rowing Machine","Jump Rope","Battle Rope","Stair Climber","Elliptical","HIIT","Box Jump","Burpee","Sled Push","Assault Bike"]
-  },
-  {
-    group: "🤸 Olympic / Power", color: "#e05c5c",
-    exercises: ["Clean and Jerk","Snatch","Power Clean","Push Press","Thruster","Hang Clean","Power Snatch","Clean Pull","Jerk","Turkish Get-Up"]
-  },
+  {group:"🫀 Chest",color:"#e05c7a",exercises:["Bench Press","Incline Bench Press","Decline Bench Press","Dumbbell Fly","Cable Fly","Chest Dips","Push-up","Incline Dumbbell Press","Machine Chest Press","Pec Deck","Low Cable Fly","Svend Press"]},
+  {group:"🔙 Back",color:"#5c9ee0",exercises:["Deadlift","Pull-up","Chin-up","Lat Pulldown","Seated Cable Row","Barbell Row","T-Bar Row","Single Arm Row","Face Pull","Straight Arm Pulldown","Chest Supported Row","Rack Pull","Good Morning","Hyperextension"]},
+  {group:"💪 Shoulders",color:"#a05ce0",exercises:["Military Press","Dumbbell Shoulder Press","Lateral Raise","Front Raise","Rear Delt Fly","Arnold Press","Upright Row","Cable Lateral Raise","Machine Shoulder Press","Barbell Shrug","Dumbbell Shrug","Bradford Press"]},
+  {group:"💪 Biceps",color:"#5ce0b8",exercises:["Barbell Curl","Dumbbell Curl","Hammer Curl","Preacher Curl","Cable Curl","Concentration Curl","Incline Dumbbell Curl","Spider Curl","Zottman Curl","Reverse Curl","21s"]},
+  {group:"💪 Triceps",color:"#e0a05c",exercises:["Tricep Dips","Skull Crusher","Cable Pushdown","Rope Pushdown","Overhead Extension","Close Grip Bench Press","Diamond Push-up","Kickback","French Press","JM Press"]},
+  {group:"🦵 Legs",color:"#5ce05c",exercises:["Squat","Front Squat","Leg Press","Romanian Deadlift","Leg Curl","Leg Extension","Bulgarian Split Squat","Hack Squat","Lunges","Walking Lunges","Hip Thrust","Glute Bridge","Calf Raise","Seated Calf Raise","Sumo Squat","Box Squat","Step-up","Nordic Curl"]},
+  {group:"🔥 Core",color:"#e0d45c",exercises:["Plank","Crunch","Sit-up","Leg Raise","Hanging Leg Raise","Cable Crunch","Russian Twist","Ab Wheel","Mountain Climber","Bicycle Crunch","Side Plank","Hollow Body Hold","Dragon Flag","Toes to Bar"]},
+  {group:"🏃 Cardio",color:"#5cb8e0",exercises:["Running","Cycling","Rowing Machine","Jump Rope","Battle Rope","Stair Climber","Elliptical","HIIT","Box Jump","Burpee","Sled Push","Assault Bike"]},
+  {group:"🤸 Olympic",color:"#e05c5c",exercises:["Clean and Jerk","Snatch","Power Clean","Push Press","Thruster","Hang Clean","Power Snatch","Clean Pull","Jerk","Turkish Get-Up"]},
 ];
 
-function ExercisePickerModal({ modal, setModal, onAdd, onClose }) {
+function ExercisePickerModal({ modal, setModal, onAdd, onClose, t }) {
   const [search, setSearch] = useState("");
   const [activeGroup, setActiveGroup] = useState("All");
-
-  const filtered = LIBRARY.map(g => ({
-    ...g,
-    exercises: g.exercises.filter(e =>
-      e.toLowerCase().includes(search.toLowerCase()) &&
-      (activeGroup === "All" || activeGroup === g.group)
-    )
-  })).filter(g => g.exercises.length > 0);
-
-  const allGroups = ["All", ...LIBRARY.map(g => g.group)];
-
-  const select = (name) => {
-    setModal(m => ({ ...m, name }));
-  };
-
+  const filtered = LIBRARY.map(g => ({...g, exercises:g.exercises.filter(e => e.toLowerCase().includes(search.toLowerCase()) && (activeGroup==="All"||activeGroup===g.group))})).filter(g=>g.exercises.length>0);
+  const allGroups = ["All",...LIBRARY.map(g=>g.group)];
+  const select = (name) => setModal(m=>({...m,name}));
   return (
-    <div className="overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div className="modal" style={{maxWidth:620,padding:"28px 0 0",display:"flex",flexDirection:"column",height:"85vh"}}>
-        {/* Header */}
         <div style={{padding:"0 28px 20px",borderBottom:"1px solid var(--border)",flexShrink:0}}>
-          <div className="modal-title" style={{marginBottom:16}}>Add Exercise</div>
-          <input
-            className="input"
-            placeholder="🔍  Search or type your own exercise…"
-            value={modal.name}
-            onChange={e => { setModal(m => ({ ...m, name: e.target.value })); setSearch(e.target.value); }}
-            onKeyDown={e => e.key === "Enter" && modal.name.trim() && onAdd()}
-            autoFocus
-            style={{marginBottom:14}}
-          />
-          {/* Group filter pills */}
+          <div className="modal-title" style={{marginBottom:16}}>{t("addExo")}</div>
+          <input className="input" placeholder="🔍  Search or type your own exercise…" value={modal.name}
+            onChange={e=>{setModal(m=>({...m,name:e.target.value}));setSearch(e.target.value);}}
+            onKeyDown={e=>e.key==="Enter"&&modal.name.trim()&&onAdd()} autoFocus style={{marginBottom:14}} />
           <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-            {allGroups.map(g => (
-              <button key={g} onClick={() => setActiveGroup(g)} style={{
-                padding:"4px 12px",border:"1px solid",borderRadius:"20px",
-                fontSize:".58rem",letterSpacing:"1px",cursor:"pointer",
-                fontFamily:"var(--font-body)",fontWeight:500,
+            {allGroups.map(g=>(
+              <button key={g} onClick={()=>setActiveGroup(g)} style={{
+                padding:"4px 12px",border:"1px solid",borderRadius:"20px",fontSize:".58rem",
+                letterSpacing:"1px",cursor:"pointer",fontFamily:"var(--font-body)",fontWeight:500,
                 transition:"var(--transition)",
-                background: activeGroup === g ? "var(--gold)" : "transparent",
-                color: activeGroup === g ? "#080810" : "var(--muted)",
-                borderColor: activeGroup === g ? "var(--gold)" : "var(--border)",
-              }}>
-                {g === "All" ? "✦ All" : g}
-              </button>
+                background:activeGroup===g?"var(--gold)":"transparent",
+                color:activeGroup===g?"#1a1828":"var(--muted)",
+                borderColor:activeGroup===g?"var(--gold)":"var(--border)",
+              }}>{g==="All"?"✦ All":g}</button>
             ))}
           </div>
         </div>
-
-        {/* Exercise list */}
         <div style={{overflowY:"auto",flex:1,padding:"16px 28px"}}>
-          {filtered.length === 0 ? (
+          {filtered.length===0 ? (
             <div style={{textAlign:"center",padding:"40px 0",color:"var(--muted)"}}>
               <div style={{fontSize:"1.5rem",marginBottom:8}}>✦</div>
               <div style={{fontSize:".65rem",letterSpacing:"3px",textTransform:"uppercase"}}>No match — press Enter to add yours</div>
             </div>
-          ) : filtered.map(g => (
+          ) : filtered.map(g=>(
             <div key={g.group} style={{marginBottom:20}}>
-              <div style={{
-                fontSize:".58rem",letterSpacing:"3px",textTransform:"uppercase",
-                color:g.color,marginBottom:8,fontWeight:500,
-                display:"flex",alignItems:"center",gap:8,
-              }}>
-                <span style={{flex:1,height:"1px",background:`linear-gradient(90deg,${g.color}44,transparent)`}} />
-                {g.group}
-                <span style={{flex:1,height:"1px",background:`linear-gradient(270deg,${g.color}44,transparent)`}} />
+              <div style={{fontSize:".58rem",letterSpacing:"3px",textTransform:"uppercase",color:g.color,marginBottom:8,fontWeight:500,display:"flex",alignItems:"center",gap:8}}>
+                <span style={{flex:1,height:"1px",background:`linear-gradient(90deg,${g.color}44,transparent)`}} />{g.group}<span style={{flex:1,height:"1px",background:`linear-gradient(270deg,${g.color}44,transparent)`}} />
               </div>
               <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                {g.exercises.map(e => (
-                  <button key={e} onClick={() => select(e)} style={{
-                    padding:"6px 14px",
-                    border:"1px solid",
-                    borderRadius:"2px",
-                    fontSize:".68rem",
-                    cursor:"pointer",
-                    fontFamily:"var(--font-body)",
-                    fontWeight: modal.name === e ? 600 : 300,
-                    transition:"all 0.2s",
-                    background: modal.name === e ? `${g.color}22` : "rgba(255,255,255,0.02)",
-                    color: modal.name === e ? g.color : "var(--muted)",
-                    borderColor: modal.name === e ? g.color : "var(--border)",
-                    boxShadow: modal.name === e ? `0 0 12px ${g.color}33` : "none",
-                    transform: modal.name === e ? "scale(1.03)" : "scale(1)",
-                  }}>
-                    {e}
-                  </button>
+                {g.exercises.map(e=>(
+                  <button key={e} onClick={()=>select(e)} style={{
+                    padding:"6px 14px",border:"1px solid",borderRadius:"2px",fontSize:".68rem",cursor:"pointer",
+                    fontFamily:"var(--font-body)",fontWeight:modal.name===e?600:300,transition:"all .2s",
+                    background:modal.name===e?`${g.color}22`:"var(--surface)",
+                    color:modal.name===e?g.color:"var(--muted)",
+                    borderColor:modal.name===e?g.color:"var(--border)",
+                    boxShadow:modal.name===e?`0 0 12px ${g.color}33`:"none",
+                    transform:modal.name===e?"scale(1.03)":"scale(1)",
+                  }}>{e}</button>
                 ))}
               </div>
             </div>
           ))}
         </div>
-
-        {/* Footer */}
         <div style={{padding:"16px 28px",borderTop:"1px solid var(--border)",flexShrink:0,display:"flex",gap:10,alignItems:"center"}}>
-          {modal.name.trim() && (
-            <div style={{flex:1,fontSize:".65rem",color:"var(--gold)",letterSpacing:"1px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-              ✦ {modal.name}
-            </div>
-          )}
-          <button className="btn btn-primary" onClick={onAdd} style={{marginLeft:"auto"}} disabled={!modal.name.trim()}>Add Exercise</button>
-          <button className="btn btn-ghost" onClick={onClose}>Cancel</button>
+          {modal.name.trim() && <div style={{flex:1,fontSize:".65rem",color:"var(--gold)",letterSpacing:"1px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>✦ {modal.name}</div>}
+          <button className="btn btn-primary" onClick={onAdd} style={{marginLeft:"auto"}} disabled={!modal.name.trim()}>{t("addExo")}</button>
+          <button className="btn btn-ghost" onClick={onClose}>{t("cancel")}</button>
         </div>
       </div>
     </div>
