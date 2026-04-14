@@ -2,7 +2,9 @@
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>TrackFit</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
@@ -19,6 +21,7 @@
   --text:#e8e8f0;--red:#e05c5c;--green:#5ce0a0;
   --font-display:'Cormorant Garamond',serif;--font-body:'Outfit',sans-serif;
   --radius:2px;--transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  --bottom-nav-h: 64px;
 }
 [data-theme="light"]{
   --bg:#f7f5ef;--bg2:#eeebe3;
@@ -28,7 +31,7 @@
   --platinum:#1a1828;--muted:rgba(26,24,40,0.45);--muted2:rgba(26,24,40,0.25);
   --text:#1a1828;--red:#b02020;--green:#1a7a50;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
 body{
   background:var(--bg);color:var(--text);font-family:var(--font-body);
   min-height:100vh;overflow-x:hidden;
@@ -55,19 +58,69 @@ body::after{
 #root{position:relative;z-index:1}
 .app{max-width:900px;margin:0 auto;padding:0 24px 100px}
 
+/* ── LOGIN SCREEN ── */
+.login-screen{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;position:relative;
+}
+.login-logo{font-family:var(--font-display);font-size:3.5rem;font-weight:300;letter-spacing:10px;color:var(--platinum);text-align:center;margin-bottom:4px;}
+.login-logo span{color:var(--gold);}
+.login-sub{font-size:.6rem;color:var(--muted);letter-spacing:6px;text-transform:uppercase;text-align:center;margin-bottom:48px;}
+.login-box{width:100%;max-width:440px;}
+.accounts-grid{display:grid;gap:10px;margin-bottom:20px;}
+.account-card{
+  background:var(--surface);border:1px solid var(--border);padding:18px 22px;
+  border-radius:var(--radius);cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;gap:16px;
+}
+.account-card:hover{border-color:rgba(201,168,76,0.35);background:var(--surface2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.account-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),rgba(201,168,76,0.4));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.5rem;font-weight:500;color:#1a1828;flex-shrink:0;}
+.account-name{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--platinum);letter-spacing:1px;}
+.account-sub{font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-top:2px;}
+.account-arrow{color:var(--muted2);margin-left:auto;font-size:1.2rem;}
+
+/* PIN INPUT */
+.pin-screen{text-align:center;}
+.pin-title{font-family:var(--font-display);font-size:2rem;font-weight:300;letter-spacing:4px;color:var(--platinum);margin-bottom:6px;}
+.pin-sub{font-size:.62rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;}
+.pin-dots{display:flex;gap:16px;justify-content:center;margin-bottom:32px;}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);transition:var(--transition);}
+.pin-dot.filled{background:var(--gold);border-color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.5);}
+.pin-dot.error{background:var(--red);border-color:var(--red);animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:260px;margin:0 auto;}
+.pin-key{
+  height:62px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--platinum);
+  cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.pin-key:hover{border-color:rgba(201,168,76,0.3);background:var(--surface2);}
+.pin-key:active{transform:scale(0.95);background:rgba(201,168,76,0.1);}
+.pin-key.zero{grid-column:2;}
+.pin-key.del{background:transparent;border-color:transparent;color:var(--muted);font-size:1.2rem;}
+.pin-key.del:hover{color:var(--red);}
+
+/* CREATE ACCOUNT */
+.create-account{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;width:100%;max-width:440px;}
+.create-title{font-family:var(--font-display);font-size:1.8rem;font-weight:300;letter-spacing:3px;color:var(--platinum);margin-bottom:24px;}
+.login-step-indicator{display:flex;gap:8px;margin-bottom:28px;justify-content:center;}
+.login-step{width:28px;height:2px;border-radius:1px;background:var(--border);transition:var(--transition);}
+.login-step.active{background:var(--gold);}
+
 /* HEADER */
 .header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:26px 0 20px;border-bottom:1px solid var(--border);
-  margin-bottom:48px;position:relative;gap:12px;flex-wrap:wrap;
+  padding:20px 0 16px;border-bottom:1px solid var(--border);
+  margin-bottom:40px;position:relative;gap:12px;flex-wrap:wrap;
 }
 .header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
 .header-left{display:flex;flex-direction:column;flex-shrink:0;}
 .header-center{flex:1;display:flex;justify-content:center;min-width:0;}
 .header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.logo{font-family:var(--font-display);font-size:2rem;font-weight:300;letter-spacing:8px;color:var(--platinum);cursor:pointer;}
+.logo{font-family:var(--font-display);font-size:1.8rem;font-weight:300;letter-spacing:6px;color:var(--platinum);cursor:pointer;}
 .logo span{color:var(--gold);}
-.logo-sub{font-size:.58rem;color:var(--muted);letter-spacing:5px;text-transform:uppercase;margin-top:2px;font-weight:300;}
+.logo-sub{font-size:.55rem;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-top:1px;font-weight:300;}
 
 /* CTRL BUTTONS */
 .ctrl-btn{
@@ -81,7 +134,6 @@ body::after{
 .ctrl-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
 .ctrl-btn.is-active{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
 .ctrl-sep{width:1px;height:20px;background:var(--border);margin:0 2px;flex-shrink:0;}
-.friends-btn{position:relative;}
 .friends-dot{position:absolute;top:-3px;right:-3px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);}
 
 /* BREADCRUMB */
@@ -97,6 +149,7 @@ body::after{
   font-family:var(--font-body);font-size:.72rem;font-weight:500;
   letter-spacing:2px;text-transform:uppercase;
   transition:var(--transition);position:relative;overflow:hidden;border-radius:var(--radius);
+  min-height:44px;
 }
 .btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .2s;}
 .btn:hover::after{background:rgba(255,255,255,0.06);}
@@ -107,15 +160,17 @@ body::after{
 .btn-ghost:hover{border-color:var(--border-hover);color:var(--text);}
 .btn-danger{background:transparent;color:var(--red);border:1px solid rgba(224,92,92,0.3);}
 .btn-danger:hover{background:rgba(224,92,92,0.08);}
-.btn-sm{padding:7px 16px;font-size:.65rem;}
-.btn-icon{background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;padding:6px;transition:var(--transition);}
+.btn-sm{padding:7px 16px;font-size:.65rem;min-height:36px;}
+.btn-icon{background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;padding:8px;transition:var(--transition);min-width:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;}
 .btn-icon:hover{color:var(--red);transform:scale(1.1);}
+.btn-icon-sm{padding:6px;min-width:32px;min-height:32px;}
 
 /* INPUTS */
 .input{
   width:100%;background:var(--surface);border:1px solid var(--border);
   color:var(--text);font-family:var(--font-body);font-size:.8rem;font-weight:300;
-  padding:12px 16px;outline:none;transition:var(--transition);border-radius:var(--radius);
+  padding:13px 16px;outline:none;transition:var(--transition);border-radius:var(--radius);
+  min-height:48px;
 }
 .input:focus{border-color:var(--gold);background:rgba(201,168,76,0.04);box-shadow:0 0 0 3px rgba(201,168,76,0.06);}
 .input::placeholder{color:var(--muted2);}
@@ -124,12 +179,12 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 
 /* PAGE */
 .page-title{
-  font-family:var(--font-display);font-size:3.5rem;font-weight:300;
+  font-family:var(--font-display);font-size:3.2rem;font-weight:300;
   letter-spacing:3px;line-height:1;margin-bottom:6px;
   background:linear-gradient(135deg,var(--platinum) 60%,var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.page-sub{font-size:.65rem;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:40px;font-weight:300;}
+.page-sub{font-size:.65rem;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:36px;font-weight:300;}
 .accent-bar{width:32px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:16px;}
 
 /* CARDS */
@@ -152,11 +207,12 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 [data-theme="light"] .tag-gold{background:rgba(158,115,32,0.1);border-color:rgba(158,115,32,0.3);}
 
 /* DAYS GRID */
-.days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:36px;}
-.day-card{background:var(--surface);border:1px solid var(--border);padding:22px 20px 18px;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;min-height:100px;border-radius:var(--radius);}
+.days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:36px;}
+.day-card{background:var(--surface);border:1px solid var(--border);padding:22px 20px 18px;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;min-height:96px;border-radius:var(--radius);}
 .day-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1);}
 .day-card:hover{border-color:rgba(201,168,76,0.25);background:var(--surface2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.15);}
 .day-card:hover::after{transform:scaleX(1);}
+.day-card:active{transform:translateY(0);}
 .day-num-bg{position:absolute;bottom:-10px;right:8px;font-family:var(--font-display);font-size:4.5rem;font-weight:300;color:rgba(255,255,255,0.03);line-height:1;transition:var(--transition);pointer-events:none;letter-spacing:-2px;}
 [data-theme="light"] .day-num-bg{color:rgba(0,0,0,0.04);}
 .day-card:hover .day-num-bg{color:rgba(201,168,76,0.08);}
@@ -174,7 +230,7 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 
 /* STATS */
 .stats-row{display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap;}
-.stat-box{background:var(--surface);border:1px solid var(--border);padding:18px 22px;flex:1;min-width:90px;border-radius:var(--radius);transition:var(--transition);position:relative;overflow:hidden;}
+.stat-box{background:var(--surface);border:1px solid var(--border);padding:18px 22px;flex:1;min-width:80px;border-radius:var(--radius);transition:var(--transition);position:relative;overflow:hidden;}
 .stat-box::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(180deg,var(--gold),transparent);opacity:.4;}
 .stat-box:hover{border-color:rgba(201,168,76,0.2);transform:translateY(-2px);}
 .stat-value{font-family:var(--font-display);font-size:2.2rem;font-weight:400;color:var(--gold2);letter-spacing:1px;line-height:1;}
@@ -199,25 +255,25 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 @keyframes prPulse{0%,100%{box-shadow:0 0 12px rgba(201,168,76,0.4)}50%{box-shadow:0 0 20px rgba(201,168,76,0.7)}}
 
 /* EMPTY */
-.empty{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty{text-align:center;padding:70px 20px;color:var(--muted);}
 .empty-icon{font-size:2.5rem;margin-bottom:16px;opacity:.4;}
 .empty-text{font-size:.65rem;letter-spacing:4px;text-transform:uppercase;font-weight:300;}
 
 /* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(4,4,12,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;animation:fadeOverlay .2s ease;}
+.overlay{position:fixed;inset:0;background:rgba(4,4,12,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px;animation:fadeOverlay .2s ease;}
 [data-theme="light"] .overlay{background:rgba(230,227,218,0.88);}
 @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
 .modal{
-  background:#0f0f1e;border:1px solid var(--border);padding:36px;
-  width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  background:#0f0f1e;border:1px solid var(--border);padding:32px;
+  width:100%;max-width:480px;max-height:92vh;overflow-y:auto;
   border-radius:var(--radius);position:relative;
   box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.08);
   animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
 }
 [data-theme="light"] .modal{background:#f0ede6;box-shadow:0 40px 80px rgba(0,0,0,0.12),0 0 0 1px rgba(158,115,32,0.1);}
 @keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
-.modal::before{content:'';position:absolute;top:0;left:36px;right:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4;}
-.modal-title{font-family:var(--font-display);font-size:2rem;font-weight:300;letter-spacing:3px;margin-bottom:28px;color:var(--platinum);}
+.modal::before{content:'';position:absolute;top:0;left:32px;right:32px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4;}
+.modal-title{font-family:var(--font-display);font-size:1.9rem;font-weight:300;letter-spacing:3px;margin-bottom:24px;color:var(--platinum);}
 .form-group{margin-bottom:18px;}
 
 /* SET ROW */
@@ -225,7 +281,7 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 .set-num{font-size:.62rem;color:var(--muted);text-align:center;font-weight:300;}
 
 /* GOLD LINE */
-.gold-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin:32px 0;}
+.gold-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin:28px 0;}
 
 /* ARROW RIGHT */
 .arrow-right{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--border);color:var(--muted);font-size:.7rem;transition:var(--transition);border-radius:50%;}
@@ -243,7 +299,7 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 /* FRIENDS */
 .friend-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:var(--transition);}
 .friend-card:hover{border-color:var(--border-hover);}
-.friend-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;}
+.friend-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;flex-wrap:wrap;gap:12px;}
 .friend-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),rgba(201,168,76,0.4));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;font-weight:500;color:#1a1828;flex-shrink:0;margin-right:14px;}
 .friend-name{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--platinum);letter-spacing:1px;}
 .friend-sub{font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-top:2px;}
@@ -276,7 +332,7 @@ label{display:block;font-size:.62rem;letter-spacing:3px;text-transform:uppercase
 
 /* RANGE */
 input[type=range]{width:100%;margin-top:10px;-webkit-appearance:none;appearance:none;height:2px;background:var(--border);border-radius:2px;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 10px rgba(201,168,76,0.4);transition:box-shadow .2s;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 10px rgba(201,168,76,0.4);transition:box-shadow .2s;}
 input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 20px rgba(201,168,76,0.6);}
 input[type=date]{color-scheme:dark;}
 [data-theme="light"] input[type=date]{color-scheme:light;}
@@ -302,10 +358,151 @@ input[type=date]{color-scheme:dark;}
 ::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:2px;}
 ::-webkit-scrollbar-thumb:hover{background:rgba(201,168,76,0.4);}
 
+/* ══════════════════════════════════════════════════════
+   BOTTOM NAV (mobile)
+══════════════════════════════════════════════════════ */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--bottom-nav-h);
+  background:rgba(8,8,16,0.92);
+  border-top:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  z-index:50;
+  padding:0 8px;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+[data-theme="light"] .bottom-nav{background:rgba(242,240,232,0.95);}
+.bottom-nav-inner{
+  display:flex;align-items:center;justify-content:space-around;
+  height:100%;
+}
+.nav-tab{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:8px 16px;border-radius:12px;cursor:pointer;transition:var(--transition);
+  border:none;background:transparent;color:var(--muted);font-family:var(--font-body);
+  min-width:64px;position:relative;
+}
+.nav-tab.active{color:var(--gold);}
+.nav-tab-icon{font-size:1.3rem;line-height:1;transition:var(--transition);}
+.nav-tab.active .nav-tab-icon{transform:translateY(-2px);}
+.nav-tab-label{font-size:.5rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;}
+.nav-tab-dot{position:absolute;top:6px;right:12px;width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);}
+
+/* ══════════════════════════════════════════════════════
+   BACKUP / EXPORT SECTION
+══════════════════════════════════════════════════════ */
+.backup-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;position:relative;overflow:hidden;}
+.backup-section::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#5ce0a0,transparent);}
+.backup-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+
+/* ══════════════════════════════════════════════════════
+   DESKTOP: hide bottom nav & keep header nav
+══════════════════════════════════════════════════════ */
+@media(min-width:641px){
+  .bottom-nav{display:none !important;}
+  .header-nav-desktop{display:flex;}
+  .header-center-desktop{display:flex;}
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE OVERRIDES (≤ 640px)
+══════════════════════════════════════════════════════ */
 @media(max-width:640px){
+  .bottom-nav{display:flex !important;}
+  .app{padding:0 16px calc(var(--bottom-nav-h) + 24px + env(safe-area-inset-bottom));}
+
+  /* Hide some header items */
   .header-center{display:none;}
-  .page-title{font-size:2.4rem;}
   .ctrl-btn-txt{display:none;}
+  .header{padding:14px 0 12px;margin-bottom:24px;}
+  .logo{font-size:1.5rem;letter-spacing:4px;}
+  .logo-sub{display:none;}
+  .header-right{gap:4px;}
+  .ctrl-sep{margin:0;}
+
+  /* Page titles */
+  .page-title{font-size:2.2rem;letter-spacing:2px;}
+  .page-sub{font-size:.6rem;letter-spacing:3px;margin-bottom:24px;}
+
+  /* Stats */
+  .stats-row{gap:8px;}
+  .stat-box{padding:14px 16px;}
+  .stat-value{font-size:1.9rem;}
+  .stat-label{font-size:.52rem;letter-spacing:2px;}
+
+  /* Days grid: 2 columns on mobile */
+  .days-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .day-card{padding:18px 16px 14px;min-height:80px;}
+  .day-num-bg{font-size:3.5rem;}
+  .day-card-name{font-size:.68rem;letter-spacing:1.5px;}
+
+  /* Cards */
+  .card{padding:18px 20px;}
+  .card-title{font-size:1.4rem;}
+
+  /* Exercises */
+  .exo-row{padding:16px 0;}
+  .exo-name{font-size:.78rem;}
+
+  /* History session */
+  .history-session{padding:16px 18px;}
+  .log-table th,.log-table td{padding:8px;}
+  .log-table td{font-size:.72rem;}
+
+  /* Profile section */
+  .profile-section{padding:18px 20px;}
+
+  /* Friends */
+  .friend-header{padding:16px 18px;}
+  .friend-body{padding:4px 18px 16px;}
+  .friend-avatar{width:36px;height:36px;font-size:1.1rem;margin-right:10px;}
+  .friend-name{font-size:1.2rem;}
+
+  /* Modal: slide from bottom on mobile */
+  .overlay{align-items:flex-end;padding:0;}
+  .modal{
+    max-width:100%;border-radius:20px 20px 0 0;
+    max-height:92vh;padding:24px 20px;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  }
+  .modal::before{left:20px;right:20px;}
+  @keyframes modalIn{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+  .modal-title{font-size:1.6rem;margin-bottom:20px;}
+
+  /* Set rows in log modal */
+  .set-row{grid-template-columns:28px 1fr 1fr auto;gap:6px;}
+
+  /* Buttons */
+  .btn{min-height:48px;}
+  .btn-sm{min-height:40px;}
+
+  /* Input */
+  .input{min-height:50px;font-size:.85rem;}
+
+  /* Backup */
+  .backup-section{padding:18px 20px;}
+
+  /* Login */
+  .login-logo{font-size:2.8rem;}
+  .login-sub{margin-bottom:36px;}
+  .pin-keypad{gap:8px;}
+  .pin-key{height:66px;font-size:2rem;}
+  .pin-dots{gap:18px;}
+  .pin-dot{width:18px;height:18px;}
+
+  /* Tag wrapping */
+  .tag{margin-bottom:4px;}
+}
+
+/* Very small screens */
+@media(max-width:380px){
+  .days-grid{grid-template-columns:1fr 1fr;}
+  .stats-row{flex-direction:column;}
+  .stat-box{min-width:0;}
+  .pin-keypad{max-width:240px;}
+  .pin-key{height:58px;font-size:1.7rem;}
 }
 </style>
 </head>
@@ -313,15 +510,24 @@ input[type=date]{color-scheme:dark;}
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect, useRef, createContext, useContext } = React;
+const { useState, useEffect, useRef, useCallback } = React;
 
 /* ── STORAGE ─────────────────────────────────────────────────────────────── */
-const STORAGE_KEY = "replog_v3";
-const load = () => { try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
-const save = (d) => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch {} };
-const uid = () => Math.random().toString(36).slice(2, 9);
+const ACCOUNTS_KEY = "replog_accounts_v1";
+const SESSION_KEY  = "replog_session_v1";
+const dataKey      = (u) => `replog_data_v3_${u}`;
+
+const loadAccounts  = () => { try { const r = localStorage.getItem(ACCOUNTS_KEY); return r ? JSON.parse(r) : []; } catch { return []; } };
+const saveAccounts  = (a) => { try { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(a)); } catch {} };
+const loadSession   = () => { try { const r = localStorage.getItem(SESSION_KEY); return r ? JSON.parse(r) : null; } catch { return null; } };
+const saveSession   = (s) => { try { if (s) localStorage.setItem(SESSION_KEY, JSON.stringify(s)); else localStorage.removeItem(SESSION_KEY); } catch {} };
+const loadUserData  = (u) => { try { const r = localStorage.getItem(dataKey(u)); return r ? JSON.parse(r) : null; } catch { return null; } };
+const saveUserData  = (u, d) => { try { localStorage.setItem(dataKey(u), JSON.stringify(d)); } catch {} };
+const defaultData   = (u) => ({ programs:[], userId:uid(), username:u, friends:[] });
+
+const uid   = () => Math.random().toString(36).slice(2, 9);
 const today = () => new Date().toISOString().slice(0, 10);
-const fmt = (d, locale) => new Date(d + "T00:00:00").toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" });
+const fmt   = (d, locale) => new Date(d + "T00:00:00").toLocaleDateString(locale, { day:"2-digit", month:"short", year:"numeric" });
 
 /* ── TRANSLATIONS ────────────────────────────────────────────────────────── */
 const T = {
@@ -329,12 +535,12 @@ const T = {
     appSub:"Suivi de Performance", friendsBtn:"Amis",
     myPrograms:"MES PROGRAMMES", manageTrain:"Gérez vos plans d'entraînement",
     noProg:"Aucun programme — créez votre premier", newProg:"+ Nouveau programme",
-    daysWk:"jours / sem.", exoCount:"exercices", sessLogged:"séances enregistrées",
+    daysWk:"jours / sem.", exoCount:"exercices", sessLogged:"séances",
     selectSess:"Sélectionnez une séance", deleteProg:"Supprimer le programme",
     addFirstExo:"Ajoutez votre premier exercice", addExo:"+ Ajouter un exercice",
     renameDay:"✏ Renommer", pr:"PR", personalRec:"Record Personnel",
     totalSets:"Séries totales", lastSess:"Dernière séance", sessions:"Séances",
-    sessHist:"Historique des séances", logSess:"+ Enregistrer séance",
+    sessHist:"Historique des séances", logSess:"+ Séance",
     noSessYet:"Aucune séance enregistrée", deleteExo:"Supprimer l'exercice",
     logTitle:"Enregistrer Séance", date:"Date", sets:"Séries",
     reps:"REPS", weightLbl:"POIDS (kg)", addSet:"+ Ajouter série",
@@ -361,6 +567,31 @@ const T = {
     noProgs:"Aucun programme partagé",
     delSessQ:"Supprimer cette séance ?", delExoQ:"Supprimer cet exercice ?", delProgQ:"Supprimer ce programme ?",
     trainingDays:"jours d'entraînement",
+    // Login
+    loginTitle:"Bon retour", loginSub:"Choisissez votre compte",
+    createAccount:"Créer un compte",
+    newAccountTitle:"Nouveau Compte",
+    chooseUsername:"Pseudo",
+    chooseUsernamePh:"Votre prénom ou pseudo…",
+    choosePin:"Code PIN (4 chiffres)",
+    confirmPin:"Confirmer le PIN",
+    pinMismatch:"Les codes ne correspondent pas",
+    pinTooShort:"Le PIN doit faire 4 chiffres",
+    createBtn:"Créer le compte",
+    enterPin:"Entrez votre PIN",
+    wrongPin:"Code incorrect",
+    backToAccounts:"← Retour",
+    logout:"Déconnexion",
+    // Backup
+    backupTitle:"Sauvegarde des données",
+    backupHint:"Exportez vos données pour les restaurer après une mise à jour ou sur un autre appareil.",
+    exportData:"Exporter mes données",
+    importData:"Importer",
+    importSuccess:"Données importées avec succès !",
+    importError:"Fichier invalide — vérifiez le format",
+    deleteAccount:"Supprimer le compte",
+    deleteAccountQ:"Supprimer définitivement ce compte et toutes ses données ?",
+    settings:"Paramètres",
     exo:(n)=>`${n} exercice${n!==1?"s":""}`,
     ses:(n)=>`${n} séance${n!==1?"s":""}`,
     st:(n)=>`${n} série${n!==1?"s":""}`,
@@ -369,12 +600,12 @@ const T = {
     appSub:"Performance Tracking", friendsBtn:"Friends",
     myPrograms:"MY PROGRAMS", manageTrain:"Manage your training plans",
     noProg:"No program yet — create your first", newProg:"+ New Program",
-    daysWk:"days / week", exoCount:"exercises", sessLogged:"sessions logged",
+    daysWk:"days / week", exoCount:"exercises", sessLogged:"sessions",
     selectSess:"Select a session", deleteProg:"Delete program",
     addFirstExo:"Add your first exercise", addExo:"+ Add exercise",
     renameDay:"✏ Rename", pr:"PR", personalRec:"Personal Record",
     totalSets:"Total sets", lastSess:"Last session", sessions:"Sessions",
-    sessHist:"Session History", logSess:"+ Log session",
+    sessHist:"Session History", logSess:"+ Session",
     noSessYet:"No session logged yet", deleteExo:"Delete exercise",
     logTitle:"Log Session", date:"Date", sets:"Sets",
     reps:"REPS", weightLbl:"WEIGHT (kg)", addSet:"+ Add set",
@@ -401,6 +632,29 @@ const T = {
     noProgs:"No programs shared",
     delSessQ:"Delete this session?", delExoQ:"Delete this exercise?", delProgQ:"Delete this program?",
     trainingDays:"training days",
+    loginTitle:"Welcome back", loginSub:"Choose your account",
+    createAccount:"Create account",
+    newAccountTitle:"New Account",
+    chooseUsername:"Username",
+    chooseUsernamePh:"Your name or username…",
+    choosePin:"PIN code (4 digits)",
+    confirmPin:"Confirm PIN",
+    pinMismatch:"PINs don't match",
+    pinTooShort:"PIN must be 4 digits",
+    createBtn:"Create account",
+    enterPin:"Enter your PIN",
+    wrongPin:"Wrong PIN",
+    backToAccounts:"← Back",
+    logout:"Log out",
+    backupTitle:"Data Backup",
+    backupHint:"Export your data to restore it after an update or on another device.",
+    exportData:"Export my data",
+    importData:"Import",
+    importSuccess:"Data imported successfully!",
+    importError:"Invalid file — check the format",
+    deleteAccount:"Delete account",
+    deleteAccountQ:"Permanently delete this account and all its data?",
+    settings:"Settings",
     exo:(n)=>`${n} exercise${n!==1?"s":""}`,
     ses:(n)=>`${n} session${n!==1?"s":""}`,
     st:(n)=>`${n} set${n!==1?"s":""}`,
@@ -424,7 +678,7 @@ const decodeShare = (code) => {
 };
 
 /* ── COUNTER ─────────────────────────────────────────────────────────────── */
-function Counter({ value, unit = "" }) {
+function Counter({ value }) {
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
   useEffect(() => {
@@ -438,44 +692,298 @@ function Counter({ value, unit = "" }) {
     }, 16);
     return () => clearInterval(ref.current);
   }, [value]);
-  return <>{display}{unit}</>;
+  return <>{display}</>;
 }
 
-/* ── APP ─────────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════════════════════════════════════════════════ */
+function LoginScreen({ onLogin, lang, setLang, theme, setTheme }) {
+  const [accounts, setAccounts] = useState(loadAccounts);
+  const [step, setStep] = useState("list"); // list | pin | create1 | create2
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
+  const [newPin, setNewPin] = useState("");
+  const [newPinConfirm, setNewPinConfirm] = useState("");
+  const [createStep, setCreateStep] = useState(1);
+  const [createError, setCreateError] = useState("");
+
+  const t = (k) => T[lang][k] ?? k;
+
+  const handleSelectAccount = (acc) => {
+    setSelectedAccount(acc);
+    setPin("");
+    setPinError(false);
+    setStep("pin");
+  };
+
+  const handlePinDigit = (d) => {
+    if (pin.length >= 4) return;
+    const next = pin + d;
+    setPin(next);
+    setPinError(false);
+    if (next.length === 4) {
+      setTimeout(() => {
+        if (next === selectedAccount.pin) {
+          saveSession({ username: selectedAccount.username });
+          onLogin(selectedAccount.username);
+        } else {
+          setPinError(true);
+          setTimeout(() => { setPin(""); setPinError(false); }, 600);
+        }
+      }, 150);
+    }
+  };
+
+  const handleBackspace = () => setPin(p => p.slice(0, -1));
+
+  const handleCreateAccount = () => {
+    if (createStep === 1) {
+      if (!newUsername.trim()) { setCreateError("username"); return; }
+      if (accounts.some(a => a.username.toLowerCase() === newUsername.trim().toLowerCase())) {
+        setCreateError("taken"); return;
+      }
+      setCreateError(""); setCreateStep(2);
+    } else {
+      if (newPin.length !== 4) { setCreateError("short"); return; }
+      if (newPin !== newPinConfirm) { setCreateError("mismatch"); return; }
+      const acc = { username: newUsername.trim(), pin: newPin, createdAt: today() };
+      const updated = [...accounts, acc];
+      saveAccounts(updated);
+      setAccounts(updated);
+      // Init data
+      const d = defaultData(acc.username);
+      saveUserData(acc.username, d);
+      saveSession({ username: acc.username });
+      onLogin(acc.username);
+    }
+  };
+
+  const PinKeypad = ({ value, onChange, maxLen = 4 }) => (
+    <div className="pin-keypad">
+      {[1,2,3,4,5,6,7,8,9].map(n => (
+        <button key={n} className="pin-key" onClick={() => onChange(String(n))} disabled={value.length >= maxLen}>{n}</button>
+      ))}
+      <button className="pin-key zero" onClick={() => onChange("0")} disabled={value.length >= maxLen}>0</button>
+      <button className="pin-key del" onClick={() => onChange("DEL")}>⌫</button>
+    </div>
+  );
+
+  const handlePinKeypad = (d) => {
+    if (d === "DEL") { setPin(p => p.slice(0, -1)); return; }
+    handlePinDigit(d);
+  };
+
+  const handleNewPinKeypad = (d, target, setTarget) => {
+    if (d === "DEL") { setTarget(p => p.slice(0, -1)); return; }
+    if (target.length < 4) setTarget(p => p + d);
+  };
+
+  return (
+    <div className="login-screen">
+      {/* Theme / Lang controls top right */}
+      <div style={{position:"absolute",top:20,right:20,display:"flex",gap:6,alignItems:"center"}}>
+        <button className={`ctrl-btn ${lang==="fr"?"is-active":""}`} onClick={() => setLang("fr")}>FR</button>
+        <button className={`ctrl-btn ${lang==="en"?"is-active":""}`} onClick={() => setLang("en")}>EN</button>
+        <div className="ctrl-sep" />
+        <button className="ctrl-btn" onClick={() => setTheme(t => t === "dark" ? "light" : "dark")}>
+          {theme === "dark" ? "☀" : "🌙"}
+        </button>
+      </div>
+
+      <div className="login-logo">Track<span>Fit</span></div>
+      <div className="login-sub">{t("appSub")}</div>
+
+      {/* ACCOUNT LIST */}
+      {step === "list" && (
+        <div className="login-box fade-in">
+          {accounts.length > 0 && (
+            <>
+              <div style={{fontSize:".58rem",letterSpacing:"4px",textTransform:"uppercase",color:"var(--muted)",marginBottom:14,textAlign:"center"}}>{t("loginSub")}</div>
+              <div className="accounts-grid stagger">
+                {accounts.map(acc => (
+                  <div key={acc.username} className="account-card" onClick={() => handleSelectAccount(acc)}>
+                    <div className="account-avatar">{acc.username[0].toUpperCase()}</div>
+                    <div>
+                      <div className="account-name">{acc.username}</div>
+                      <div className="account-sub">{t("since")} {fmt(acc.createdAt, lang === "fr" ? "fr-FR" : "en-US")}</div>
+                    </div>
+                    <div className="account-arrow">›</div>
+                  </div>
+                ))}
+              </div>
+              <div className="gold-line" />
+            </>
+          )}
+          <button className="btn btn-primary" style={{width:"100%",justifyContent:"center"}} onClick={() => { setStep("create"); setCreateStep(1); setNewUsername(""); setNewPin(""); setNewPinConfirm(""); setCreateError(""); }}>
+            {accounts.length === 0 ? "✦ " : ""}{t("createAccount")}
+          </button>
+        </div>
+      )}
+
+      {/* PIN ENTRY */}
+      {step === "pin" && selectedAccount && (
+        <div className="login-box fade-in pin-screen">
+          <div className="account-avatar" style={{margin:"0 auto 16px",width:56,height:56,fontSize:"2rem"}}>{selectedAccount.username[0].toUpperCase()}</div>
+          <div className="pin-title">{selectedAccount.username}</div>
+          <div className="pin-sub">{t("enterPin")}</div>
+          <div className="pin-dots">
+            {[0,1,2,3].map(i => (
+              <div key={i} className={`pin-dot ${pin.length > i ? "filled" : ""} ${pinError ? "error" : ""}`} />
+            ))}
+          </div>
+          <div className="pin-keypad" style={{maxWidth:280,margin:"0 auto"}}>
+            {[1,2,3,4,5,6,7,8,9].map(n => (
+              <button key={n} className="pin-key" onClick={() => handlePinDigit(String(n))}>{n}</button>
+            ))}
+            <button className="pin-key" style={{background:"transparent",border:"none",cursor:"pointer",fontSize:".6rem",color:"var(--muted)",letterSpacing:"1px"}} onClick={() => setStep("list")}>{t("backToAccounts")}</button>
+            <button className="pin-key zero" onClick={() => handlePinDigit("0")}>0</button>
+            <button className="pin-key del" onClick={handleBackspace}>⌫</button>
+          </div>
+          {pinError && <div className="msg-err" style={{marginTop:16}}>✕ {t("wrongPin")}</div>}
+        </div>
+      )}
+
+      {/* CREATE ACCOUNT */}
+      {step === "create" && (
+        <div className="create-account fade-in">
+          <div className="login-step-indicator">
+            <div className={`login-step ${createStep >= 1 ? "active" : ""}`} />
+            <div className={`login-step ${createStep >= 2 ? "active" : ""}`} />
+          </div>
+          <div className="create-title">{t("newAccountTitle")}</div>
+
+          {createStep === 1 && (
+            <>
+              <div className="form-group">
+                <label>{t("chooseUsername")}</label>
+                <input className="input" placeholder={t("chooseUsernamePh")} value={newUsername}
+                  onChange={e => { setNewUsername(e.target.value); setCreateError(""); }}
+                  onKeyDown={e => e.key === "Enter" && handleCreateAccount()}
+                  autoFocus />
+                {createError === "taken" && <div className="msg-err" style={{marginTop:8}}>✕ Ce pseudo est déjà pris.</div>}
+              </div>
+              <div style={{display:"flex",gap:10,marginTop:20}}>
+                <button className="btn btn-primary" onClick={handleCreateAccount} disabled={!newUsername.trim()}>{t("next") ?? "Continuer →"}</button>
+                {accounts.length > 0 && <button className="btn btn-ghost" onClick={() => setStep("list")}>{t("cancel")}</button>}
+              </div>
+            </>
+          )}
+
+          {createStep === 2 && (
+            <>
+              <div className="form-group">
+                <label>{t("choosePin")}</label>
+                <div className="pin-dots" style={{justifyContent:"flex-start",marginBottom:16}}>
+                  {[0,1,2,3].map(i => <div key={i} className={`pin-dot ${newPin.length > i ? "filled" : ""}`} />)}
+                </div>
+                <div className="pin-keypad" style={{maxWidth:240,margin:"0 0 20px"}}>
+                  {[1,2,3,4,5,6,7,8,9].map(n => (
+                    <button key={n} className="pin-key" onClick={() => newPin.length < 4 && setNewPin(p => p + n)} style={{height:50,fontSize:"1.4rem"}}>{n}</button>
+                  ))}
+                  <div/>
+                  <button className="pin-key zero" onClick={() => newPin.length < 4 && setNewPin(p => p + "0")} style={{height:50,fontSize:"1.4rem"}}>0</button>
+                  <button className="pin-key del" onClick={() => setNewPin(p => p.slice(0,-1))} style={{height:50}}>⌫</button>
+                </div>
+              </div>
+              {newPin.length === 4 && (
+                <div className="form-group fade-in">
+                  <label>{t("confirmPin")}</label>
+                  <div className="pin-dots" style={{justifyContent:"flex-start",marginBottom:16}}>
+                    {[0,1,2,3].map(i => <div key={i} className={`pin-dot ${newPinConfirm.length > i ? "filled" : ""}`} />)}
+                  </div>
+                  <div className="pin-keypad" style={{maxWidth:240,margin:"0 0 20px"}}>
+                    {[1,2,3,4,5,6,7,8,9].map(n => (
+                      <button key={n} className="pin-key" onClick={() => newPinConfirm.length < 4 && setNewPinConfirm(p => p + n)} style={{height:50,fontSize:"1.4rem"}}>{n}</button>
+                    ))}
+                    <div/>
+                    <button className="pin-key zero" onClick={() => newPinConfirm.length < 4 && setNewPinConfirm(p => p + "0")} style={{height:50,fontSize:"1.4rem"}}>0</button>
+                    <button className="pin-key del" onClick={() => setNewPinConfirm(p => p.slice(0,-1))} style={{height:50}}>⌫</button>
+                  </div>
+                </div>
+              )}
+              {createError === "mismatch" && <div className="msg-err" style={{marginBottom:12}}>✕ {t("pinMismatch")}</div>}
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <button className="btn btn-primary" onClick={handleCreateAccount} disabled={newPin.length !== 4 || newPinConfirm.length !== 4}>{t("createBtn")}</button>
+                <button className="btn btn-ghost" onClick={() => { setCreateStep(1); setNewPin(""); setNewPinConfirm(""); setCreateError(""); }}>{t("cancel")}</button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MAIN APP
+══════════════════════════════════════════════════════════════════════════ */
 function App() {
-  const [data, setData] = useState(() => {
-    const s = load();
-    if (!s) return { programs:[], userId:uid(), username:"", friends:[] };
-    return { programs:s.programs||[], userId:s.userId||uid(), username:s.username||"", friends:s.friends||[] };
-  });
   const [theme, setTheme] = useState(() => localStorage.getItem("replog_theme") || "dark");
-  const [lang, setLang]   = useState(() => localStorage.getItem("replog_lang")  || "fr");
-  const [view,  setView]  = useState({ page:"home" });
-  const [modal, setModal] = useState(null);
+  const [lang,  setLang]  = useState(() => localStorage.getItem("replog_lang")  || "fr");
   const [loading, setLoading] = useState(true);
 
-  // friends state
-  const [shareCode,  setShareCode]  = useState("");
-  const [copyState,  setCopyState]  = useState("");   // "ok" | ""
-  const [friendInput,setFriendInput]= useState("");
-  const [friendMsg,  setFriendMsg]  = useState({ text:"", ok:true });
-  const [usernameVal,setUsernameVal]= useState("");
+  // Auth
+  const [loggedInUser, setLoggedInUser] = useState(() => {
+    const s = loadSession();
+    return s ? s.username : null;
+  });
 
-  useEffect(() => { setTimeout(() => setLoading(false), 900); }, []);
-  useEffect(() => { save(data); }, [data]);
+  // App data
+  const [data, setData] = useState(null);
+  const [view,  setView]  = useState({ page:"home" });
+  const [modal, setModal] = useState(null);
+
+  // Friends state
+  const [shareCode,   setShareCode]   = useState("");
+  const [copyState,   setCopyState]   = useState("");
+  const [friendInput, setFriendInput] = useState("");
+  const [friendMsg,   setFriendMsg]   = useState({ text:"", ok:true });
+  const [usernameVal, setUsernameVal] = useState("");
+
+  // Backup state
+  const [backupMsg, setBackupMsg] = useState({ text:"", ok:true });
+  const importInputRef = useRef(null);
+
+  useEffect(() => { setTimeout(() => setLoading(false), 700); }, []);
   useEffect(() => { document.documentElement.setAttribute("data-theme", theme); localStorage.setItem("replog_theme", theme); }, [theme]);
   useEffect(() => { document.documentElement.lang = lang; localStorage.setItem("replog_lang", lang); }, [lang]);
+
+  useEffect(() => {
+    if (loggedInUser) {
+      let d = loadUserData(loggedInUser);
+      if (!d) { d = defaultData(loggedInUser); saveUserData(loggedInUser, d); }
+      setData(d);
+    }
+  }, [loggedInUser]);
+
+  useEffect(() => {
+    if (loggedInUser && data) saveUserData(loggedInUser, data);
+  }, [data, loggedInUser]);
 
   const t = (key, ...args) => { const v = T[lang][key]; return typeof v === "function" ? v(...args) : (v ?? key); };
   const locale = lang === "fr" ? "fr-FR" : "en-US";
   const fmtD = (d) => fmt(d, locale);
-
   const upd = (fn) => setData(p => { const n = JSON.parse(JSON.stringify(p)); fn(n); return n; });
+
+  const handleLogin = (username) => setLoggedInUser(username);
+  const handleLogout = () => {
+    saveSession(null);
+    setLoggedInUser(null);
+    setData(null);
+    setView({ page:"home" });
+    setModal(null);
+  };
+
+  if (loading) return <div className="loader"><div className="loader-logo">TrackFit</div></div>;
+  if (!loggedInUser || !data) return <LoginScreen onLogin={handleLogin} lang={lang} setLang={setLang} theme={theme} setTheme={setTheme} />;
 
   const prog = view.programId ? data.programs.find(p => p.id === view.programId) : null;
   const day  = prog && view.dayId ? prog.days.find(d => d.id === view.dayId) : null;
   const exo  = day && view.exoId ? day.exercises.find(e => e.id === view.exoId) : null;
-  const nav  = (page, extra = {}) => setView({ page, ...extra });
+  const nav  = (page, extra = {}) => { setView({ page, ...extra }); window.scrollTo(0,0); };
   const closeModal = () => setModal(null);
 
   /* Program ops */
@@ -504,7 +1012,10 @@ function App() {
     upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions.push({ id:uid(), date:modal.date, sets:validSets }); });
     closeModal();
   };
-  const deleteSession = (sid) => upd(d => { d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions = d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId).sessions.filter(s => s.id !== sid); });
+  const deleteSession = (sid) => upd(d => {
+    const e = d.programs.find(p => p.id === view.programId).days.find(dd => dd.id === view.dayId).exercises.find(e => e.id === view.exoId);
+    e.sessions = e.sessions.filter(s => s.id !== sid);
+  });
 
   const addSet    = () => setModal(m => ({ ...m, sets:[...m.sets, { reps:"", weight:"" }] }));
   const removeSet = (i) => setModal(m => ({ ...m, sets:m.sets.filter((_,idx) => idx!==i) }));
@@ -536,8 +1047,7 @@ function App() {
     const name = (usernameVal || "").trim();
     if (!name) return;
     upd(d => { d.username = name; });
-    setUsernameVal("");
-    setShareCode(""); // invalidate old code
+    setUsernameVal(""); setShareCode("");
   };
   const addFriend = () => {
     setFriendMsg({ text:"", ok:true });
@@ -546,8 +1056,7 @@ function App() {
     if (decoded.userId === data.userId) { setFriendMsg({ text:t("cantAddSelf"), ok:false }); return; }
     if (data.friends.some(f => f.id === decoded.userId)) { setFriendMsg({ text:t("alreadyFriend"), ok:false }); return; }
     upd(d => d.friends.push({ id:decoded.userId, username:decoded.username, programs:decoded.programs, addedAt:today() }));
-    setFriendInput("");
-    setFriendMsg({ text:t("friendAdded"), ok:true });
+    setFriendInput(""); setFriendMsg({ text:t("friendAdded"), ok:true });
     setTimeout(() => setFriendMsg({ text:"", ok:true }), 3000);
   };
   const removeFriend = (fid) => upd(d => { d.friends = d.friends.filter(f => f.id !== fid); });
@@ -567,10 +1076,45 @@ function App() {
     return prs.sort((a,b) => b.date.localeCompare(a.date)).slice(0,5);
   };
 
+  /* Backup ops */
+  const exportData = () => {
+    const payload = { type:"replog_backup", v:1, username:loggedInUser, data, exportedAt:new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `trackfit_${loggedInUser}_${today()}.json`;
+    a.click(); URL.revokeObjectURL(url);
+  };
+  const importData = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const obj = JSON.parse(ev.target.result);
+        if (obj.type !== "replog_backup" || !obj.data) { setBackupMsg({ text:t("importError"), ok:false }); return; }
+        setData(obj.data);
+        setBackupMsg({ text:t("importSuccess"), ok:true });
+        setTimeout(() => setBackupMsg({ text:"", ok:true }), 3000);
+      } catch { setBackupMsg({ text:t("importError"), ok:false }); }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+  const deleteAccount = () => {
+    if (!window.confirm(t("deleteAccountQ"))) return;
+    localStorage.removeItem(dataKey(loggedInUser));
+    const accs = loadAccounts().filter(a => a.username !== loggedInUser);
+    saveAccounts(accs);
+    handleLogout();
+  };
+
+  /* Bottom nav tab detection */
+  const activeTab = view.page === "friends" ? "friends" : view.page === "settings" ? "settings" : "home";
+
   /* ── RENDER ── */
   return (
     <>
-      {loading && <div className="loader"><div className="loader-logo">TrackFit</div></div>}
       <div className="app">
 
         {/* HEADER */}
@@ -581,7 +1125,7 @@ function App() {
           </div>
 
           <div className="header-center">
-            {view.page !== "home" && view.page !== "friends" && (
+            {view.page !== "home" && view.page !== "friends" && view.page !== "settings" && (
               <div className="breadcrumb">
                 <span className="bc-link" onClick={() => nav("home")}>Programs</span>
                 {prog && <><span className="bc-sep">›</span><span className="bc-link" onClick={() => nav("program",{programId:prog.id})}>{prog.name}</span></>}
@@ -592,8 +1136,8 @@ function App() {
           </div>
 
           <div className="header-right">
-            {/* Friends */}
-            <button className={`ctrl-btn friends-btn ${view.page==="friends"?"is-active":""}`} onClick={() => nav(view.page==="friends"?"home":"friends")} title={t("friendsBtn")}>
+            {/* Friends (desktop) */}
+            <button className={`ctrl-btn ${view.page==="friends"?"is-active":""}`} onClick={() => nav(view.page==="friends"?"home":"friends")} title={t("friendsBtn")} style={{position:"relative"}}>
               👥 <span className="ctrl-btn-txt" style={{fontSize:".62rem",letterSpacing:"2px"}}>{t("friendsBtn")}</span>
               {data.friends.length > 0 && <span className="friends-dot" />}
             </button>
@@ -607,8 +1151,15 @@ function App() {
             <div className="ctrl-sep" />
 
             {/* Theme */}
-            <button className="ctrl-btn" onClick={() => setTheme(t => t==="dark"?"light":"dark")} title={theme==="dark"?t("light"):t("dark")}>
+            <button className="ctrl-btn" onClick={() => setTheme(t => t==="dark"?"light":"dark")}>
               {theme==="dark" ? "☀" : "🌙"}
+            </button>
+
+            <div className="ctrl-sep" />
+
+            {/* Logout */}
+            <button className="ctrl-btn" onClick={handleLogout} title={t("logout")} style={{fontSize:".7rem",letterSpacing:"1px"}}>
+              ↩ <span className="ctrl-btn-txt">{loggedInUser}</span>
             </button>
           </div>
         </header>
@@ -626,9 +1177,9 @@ function App() {
                 {data.programs.map(p => (
                   <div key={p.id} className="card card-click" onClick={() => nav("program",{programId:p.id})}>
                     <div className="card-header">
-                      <div>
+                      <div style={{flex:1,minWidth:0}}>
                         <div className="card-title">{p.name}</div>
-                        <div style={{marginTop:8}}>
+                        <div style={{marginTop:8,display:"flex",flexWrap:"wrap",gap:"0 0"}}>
                           <span className="tag tag-gold">{p.daysPerWeek} {t("daysWk")}</span>
                           <span className="tag">{p.days.reduce((a,d)=>a+d.exercises.length,0)} {t("exoCount")}</span>
                           <span className="tag">{t("since")} {fmtD(p.createdAt)}</span>
@@ -688,7 +1239,7 @@ function App() {
                   const total = e.sessions.reduce((a,s)=>a+s.sets.length,0);
                   return (
                     <div key={e.id} className="exo-row" onClick={() => nav("exercise",{programId:prog.id,dayId:day.id,exoId:e.id})}>
-                      <div>
+                      <div style={{flex:1,minWidth:0}}>
                         <div className="exo-name">{e.name}</div>
                         <div className="exo-info">{t("ses",e.sessions.length)} · {t("st",total)}{last?` · ${t("since")} ${fmtD(last.date)}`:""}</div>
                       </div>
@@ -724,7 +1275,7 @@ function App() {
                   <div className="stat-box"><div className="stat-value"><Counter value={exo.sessions.length} /></div><div className="stat-label">{t("sessions")}</div></div>
                 </div>
               )}
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,gap:12}}>
                 <div style={{fontSize:".6rem",letterSpacing:"3px",textTransform:"uppercase",color:"var(--muted)",fontWeight:300}}>{t("sessHist")}</div>
                 <button className="btn btn-primary btn-sm" onClick={openLog}>{t("logSess")}</button>
               </div>
@@ -733,7 +1284,7 @@ function App() {
               ) : (
                 <div className="stagger">
                   {[...exo.sessions].reverse().map(session => {
-                    const pr = isPR(session, exo.sessions);
+                    const pr  = isPR(session, exo.sessions);
                     const mW  = Math.max(...session.sets.map(s=>s.weight));
                     const tR  = session.sets.reduce((a,s)=>a+s.reps,0);
                     const vol = session.sets.reduce((a,s)=>a+s.reps*s.weight,0);
@@ -744,22 +1295,24 @@ function App() {
                             {fmtD(session.date)}
                             {pr && <span className="pr-badge">⚡ {t("pr")}</span>}
                           </div>
-                          <button className="btn-icon" onClick={() => { if (window.confirm(t("delSessQ"))) deleteSession(session.id); }}>✕</button>
+                          <button className="btn-icon btn-icon-sm" onClick={() => { if (window.confirm(t("delSessQ"))) deleteSession(session.id); }}>✕</button>
                         </div>
-                        <table className="log-table">
-                          <thead><tr><th>Set</th><th>{t("reps")}</th><th>{t("weightLbl")}</th><th>{t("volume")}</th></tr></thead>
-                          <tbody>
-                            {session.sets.map((set,i) => (
-                              <tr key={i}>
-                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{i+1}</td>
-                                <td className="num">{set.reps}</td>
-                                <td className="num">{set.weight} kg</td>
-                                <td style={{color:"var(--muted)",fontSize:".7rem"}}>{(set.reps*set.weight).toLocaleString(locale)} kg</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                        <div style={{fontSize:".6rem",color:"var(--muted2)",display:"flex",gap:20,flexWrap:"wrap",fontWeight:300}}>
+                        <div style={{overflowX:"auto"}}>
+                          <table className="log-table">
+                            <thead><tr><th>Set</th><th>{t("reps")}</th><th>{t("weightLbl")}</th><th>{t("volume")}</th></tr></thead>
+                            <tbody>
+                              {session.sets.map((set,i) => (
+                                <tr key={i}>
+                                  <td style={{color:"var(--muted)",fontSize:".7rem"}}>{i+1}</td>
+                                  <td className="num">{set.reps}</td>
+                                  <td className="num">{set.weight} kg</td>
+                                  <td style={{color:"var(--muted)",fontSize:".7rem"}}>{(set.reps*set.weight).toLocaleString(locale)} kg</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        <div style={{fontSize:".6rem",color:"var(--muted2)",display:"flex",gap:16,flexWrap:"wrap",fontWeight:300,marginTop:4}}>
                           <span>{t("st",session.sets.length)} · {tR} reps · {mW} kg max</span>
                           <span style={{color:"var(--gold)",opacity:.7}}>{t("volume")}: {vol.toLocaleString(locale)} kg</span>
                         </div>
@@ -781,7 +1334,6 @@ function App() {
             <div className="page-title">{t("friendsTitle")}</div>
             <div className="page-sub">{t("friendsSub")}</div>
 
-            {/* My Profile */}
             <div className="profile-section">
               <div className="section-title">👤 {t("myProfile")}</div>
               <div className="form-group">
@@ -794,20 +1346,19 @@ function App() {
                 </div>
                 {data.username && <div style={{marginTop:8,fontSize:".62rem",color:"var(--muted)",letterSpacing:"1px"}}>✓ {data.username}</div>}
               </div>
-
               <div className="form-group" style={{marginBottom:0}}>
                 <label>{t("shareCodeLbl")}</label>
-                <div style={{fontSize:".62rem",color:"var(--muted2)",marginBottom:10,letterSpacing:"0",lineHeight:1.5}}>{t("shareHint")}</div>
+                <div style={{fontSize:".62rem",color:"var(--muted2)",marginBottom:10,lineHeight:1.5}}>{t("shareHint")}</div>
                 {!data.username ? (
                   <div style={{fontSize:".62rem",color:"var(--red)",letterSpacing:"1px"}}>⚠ {lang==="fr"?"Définissez d'abord votre pseudo.":"Set your username first."}</div>
                 ) : !shareCode ? (
                   <button className="btn btn-ghost btn-sm" onClick={generateShareCode}>{t("generateCode")}</button>
                 ) : (
                   <>
-                    <div className="share-code-box" onClick={copyShareCode} title={t("copyCode")}>{shareCode}</div>
-                    <div style={{display:"flex",gap:10,alignItems:"center",marginTop:8}}>
+                    <div className="share-code-box" onClick={copyShareCode}>{shareCode}</div>
+                    <div style={{display:"flex",gap:10,alignItems:"center",marginTop:8,flexWrap:"wrap"}}>
                       <button className="btn btn-ghost btn-sm" onClick={copyShareCode}>{t("copyCode")}</button>
-                      <button className="btn btn-ghost btn-sm" style={{padding:"7px 12px"}} onClick={() => { setShareCode(""); setTimeout(generateShareCode, 50); }}>↺</button>
+                      <button className="btn btn-ghost btn-sm" onClick={() => { setShareCode(""); setTimeout(generateShareCode, 50); }}>↺</button>
                       {copyState==="ok" && <span className="msg-ok">✓ {t("copied")}</span>}
                     </div>
                   </>
@@ -815,7 +1366,6 @@ function App() {
               </div>
             </div>
 
-            {/* Add Friend */}
             <div className="profile-section">
               <div className="section-title">➕ {t("addFriend")}</div>
               <div className="form-group" style={{marginBottom:0}}>
@@ -826,19 +1376,14 @@ function App() {
                     onKeyDown={e => e.key==="Enter" && addFriend()} />
                   <button className="btn btn-primary btn-sm" onClick={addFriend} disabled={!friendInput.trim()}>{t("add")}</button>
                 </div>
-                {friendMsg.text && (
-                  <div style={{marginTop:10,animation:"fadeIn .2s ease"}} className={friendMsg.ok ? "msg-ok" : "msg-err"}>
-                    {friendMsg.ok ? "✓" : "✕"} {friendMsg.text}
-                  </div>
-                )}
+                {friendMsg.text && <div style={{marginTop:10}} className={friendMsg.ok?"msg-ok":"msg-err"}>{friendMsg.ok?"✓":"✕"} {friendMsg.text}</div>}
               </div>
             </div>
 
-            {/* Friends List */}
             <div className="section-title" style={{marginTop:32}}>👥 {t("friendsBtn")} <span style={{color:"var(--muted)",fontSize:".55rem"}}>{data.friends.length}</span></div>
 
             {data.friends.length === 0 ? (
-              <div className="empty" style={{padding:"50px 20px"}}>
+              <div className="empty" style={{padding:"40px 20px"}}>
                 <div className="empty-icon">🤝</div>
                 <div className="empty-text">{t("noFriends")}</div>
                 <div style={{fontSize:".6rem",color:"var(--muted2)",marginTop:8,letterSpacing:"2px"}}>{t("noFriendsHint")}</div>
@@ -852,35 +1397,28 @@ function App() {
                   return (
                     <div key={friend.id} className="friend-card">
                       <div className="friend-header">
-                        <div style={{display:"flex",alignItems:"center"}}>
+                        <div style={{display:"flex",alignItems:"center",flex:1,minWidth:0}}>
                           <div className="friend-avatar">{(friend.username||"?")[0].toUpperCase()}</div>
-                          <div>
+                          <div style={{minWidth:0}}>
                             <div className="friend-name">{friend.username}</div>
                             <div className="friend-sub">{t("exo",totalExos)} · {t("ses",totalSess)} · {t("since")} {fmtD(friend.addedAt)}</div>
                           </div>
                         </div>
                         <button className="btn btn-danger btn-sm" onClick={() => removeFriend(friend.id)}>{t("removeFriend")}</button>
                       </div>
-
                       <div className="friend-body">
-                        {/* PRs */}
                         {prs.length > 0 && (
                           <>
                             <div className="friend-section-label">⚡ {t("recentPRs")}</div>
                             {prs.map((pr,i) => (
                               <div key={i} className="pr-item">
                                 <div style={{fontSize:"1.1rem"}}>🏅</div>
-                                <div className="pr-info">
-                                  <div className="pr-exo">{pr.exo}</div>
-                                  <div className="pr-detail">{pr.prog} · {fmtD(pr.date)}</div>
-                                </div>
+                                <div className="pr-info"><div className="pr-exo">{pr.exo}</div><div className="pr-detail">{pr.prog} · {fmtD(pr.date)}</div></div>
                                 <div className="pr-weight">{pr.weight}<span style={{fontSize:".85rem",color:"var(--muted)"}}> kg</span></div>
                               </div>
                             ))}
                           </>
                         )}
-
-                        {/* Programs */}
                         {(friend.programs||[]).length > 0 && (
                           <>
                             <div className="friend-section-label">📋 {t("friendProgs")}</div>
@@ -889,10 +1427,7 @@ function App() {
                             </div>
                           </>
                         )}
-
-                        {prs.length === 0 && (friend.programs||[]).length === 0 && (
-                          <div style={{fontSize:".62rem",color:"var(--muted2)",padding:"12px 0",letterSpacing:"1px"}}>{t("noProgs")}</div>
-                        )}
+                        {prs.length === 0 && (friend.programs||[]).length === 0 && <div style={{fontSize:".62rem",color:"var(--muted2)",padding:"12px 0",letterSpacing:"1px"}}>{t("noProgs")}</div>}
                       </div>
                     </div>
                   );
@@ -901,7 +1436,77 @@ function App() {
             )}
           </div>
         )}
+
+        {/* ── SETTINGS ── */}
+        {view.page === "settings" && (
+          <div className="fade-in">
+            <div className="accent-bar" />
+            <div className="page-title">{t("settings")}</div>
+            <div className="page-sub">{loggedInUser}</div>
+
+            {/* Theme & Language */}
+            <div className="profile-section">
+              <div className="section-title">🎨 Apparence</div>
+              <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:16}}>
+                <button className={`btn btn-sm ${theme==="dark"?"btn-primary":"btn-ghost"}`} onClick={() => setTheme("dark")}>🌙 {t("dark")}</button>
+                <button className={`btn btn-sm ${theme==="light"?"btn-primary":"btn-ghost"}`} onClick={() => setTheme("light")}>☀ {t("light")}</button>
+              </div>
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <button className={`btn btn-sm ${lang==="fr"?"btn-primary":"btn-ghost"}`} onClick={() => setLang("fr")}>🇫🇷 Français</button>
+                <button className={`btn btn-sm ${lang==="en"?"btn-primary":"btn-ghost"}`} onClick={() => setLang("en")}>🇬🇧 English</button>
+              </div>
+            </div>
+
+            {/* Backup */}
+            <div className="backup-section">
+              <div className="section-title" style={{color:"var(--green)"}}>💾 {t("backupTitle")}</div>
+              <div style={{fontSize:".65rem",color:"var(--muted)",lineHeight:1.6}}>{t("backupHint")}</div>
+              <div className="backup-actions">
+                <button className="btn btn-ghost btn-sm" onClick={exportData}>⬇ {t("exportData")}</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => importInputRef.current?.click()}>⬆ {t("importData")}</button>
+                <input ref={importInputRef} type="file" accept=".json" style={{display:"none"}} onChange={importData} />
+              </div>
+              {backupMsg.text && (
+                <div style={{marginTop:12}} className={backupMsg.ok ? "msg-ok" : "msg-err"}>
+                  {backupMsg.ok ? "✓" : "✕"} {backupMsg.text}
+                </div>
+              )}
+            </div>
+
+            {/* Account */}
+            <div className="profile-section">
+              <div className="section-title">👤 Compte</div>
+              <div style={{marginBottom:16,fontSize:".72rem",color:"var(--muted)"}}>
+                {lang === "fr" ? "Connecté en tant que" : "Logged in as"} <strong style={{color:"var(--platinum)"}}>{loggedInUser}</strong>
+              </div>
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <button className="btn btn-ghost btn-sm" onClick={handleLogout}>↩ {t("logout")}</button>
+                <button className="btn btn-danger btn-sm" onClick={deleteAccount}>🗑 {t("deleteAccount")}</button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
+
+      {/* ── BOTTOM NAV (mobile) ── */}
+      <nav className="bottom-nav">
+        <div className="bottom-nav-inner">
+          <button className={`nav-tab ${activeTab==="home"?"active":""}`} onClick={() => nav("home")}>
+            <div className="nav-tab-icon">🏋️</div>
+            <div className="nav-tab-label">{t("myPrograms").split(" ")[1] ?? "Programs"}</div>
+          </button>
+          <button className={`nav-tab ${activeTab==="friends"?"active":""}`} onClick={() => nav("friends")} style={{position:"relative"}}>
+            <div className="nav-tab-icon">👥</div>
+            <div className="nav-tab-label">{t("friendsBtn")}</div>
+            {data.friends.length > 0 && <span className="nav-tab-dot" />}
+          </button>
+          <button className={`nav-tab ${activeTab==="settings"?"active":""}`} onClick={() => nav("settings")}>
+            <div className="nav-tab-icon">⚙️</div>
+            <div className="nav-tab-label">{t("settings")}</div>
+          </button>
+        </div>
+      </nav>
 
       {/* MODAL: Create Program */}
       {modal?.type === "createProgram" && (
@@ -921,9 +1526,9 @@ function App() {
                 {[1,2,3,4,5,6,7].map(n=><span key={n}>{n}</span>)}
               </div>
             </div>
-            <div style={{display:"flex",gap:10,marginTop:28}}>
+            <div style={{display:"flex",gap:10,marginTop:24}}>
               <button className="btn btn-primary" onClick={createProgram}>{t("createProg")}</button>
-              <button className="btn btn-ghost"   onClick={closeModal}>{t("cancel")}</button>
+              <button className="btn btn-ghost" onClick={closeModal}>{t("cancel")}</button>
             </div>
           </div>
         </div>
@@ -943,7 +1548,7 @@ function App() {
               <label>{t("date")}</label>
               <input type="date" className="input" value={modal.date} onChange={e => setModal(m=>({...m,date:e.target.value}))} />
             </div>
-            <div style={{margin:"24px 0 10px"}}>
+            <div style={{margin:"20px 0 10px"}}>
               <label>{t("sets")}</label>
               <div style={{display:"grid",gridTemplateColumns:"36px 1fr 1fr auto",gap:8,marginBottom:10}}>
                 <div/><div style={{fontSize:".58rem",color:"var(--muted)",letterSpacing:"2px"}}>{t("reps")}</div>
@@ -952,9 +1557,9 @@ function App() {
               {modal.sets.map((set,i)=>(
                 <div key={i} className="set-row" style={{animation:`fadeIn .2s ease ${i*.04}s both`}}>
                   <div className="set-num">{i+1}</div>
-                  <input type="number" min={0} className="input" placeholder="12" value={set.reps} onChange={e=>updateSet(i,"reps",e.target.value)} />
-                  <input type="number" min={0} step={0.5} className="input" placeholder="80" value={set.weight} onChange={e=>updateSet(i,"weight",e.target.value)} />
-                  <button className="btn-icon" onClick={()=>removeSet(i)}>✕</button>
+                  <input type="number" min={0} className="input" placeholder="12" value={set.reps} onChange={e=>updateSet(i,"reps",e.target.value)} inputMode="numeric" />
+                  <input type="number" min={0} step={0.5} className="input" placeholder="80" value={set.weight} onChange={e=>updateSet(i,"weight",e.target.value)} inputMode="decimal" />
+                  <button className="btn-icon btn-icon-sm" onClick={()=>removeSet(i)}>✕</button>
                 </div>
               ))}
               <button className="btn btn-ghost btn-sm" onClick={addSet} style={{marginTop:10}}>{t("addSet")}</button>
@@ -970,23 +1575,23 @@ function App() {
   );
 }
 
-/* ── EDITABLE NAME ───────────────────────────────────────────────────────── */
+/* ── EDITABLE NAME ── */
 function EditableName({ value, onChange, t }) {
   const [editing, setEditing] = useState(false);
   const [val, setVal] = useState(value);
   const save = () => { onChange(val); setEditing(false); };
   if (editing) return (
-    <div className="input-row" style={{marginBottom:28}}>
+    <div className="input-row" style={{marginBottom:24}}>
       <input className="input" value={val} onChange={e=>setVal(e.target.value)}
         onKeyDown={e=>{if(e.key==="Enter")save();if(e.key==="Escape")setEditing(false);}} autoFocus />
       <button className="btn btn-primary btn-sm" onClick={save}>{t("save")}</button>
       <button className="btn btn-ghost btn-sm" onClick={()=>setEditing(false)}>✕</button>
     </div>
   );
-  return <div style={{marginBottom:28}}><button className="btn btn-ghost btn-sm" onClick={()=>{setVal(value);setEditing(true);}}>{t("renameDay")}</button></div>;
+  return <div style={{marginBottom:24}}><button className="btn btn-ghost btn-sm" onClick={()=>{setVal(value);setEditing(true);}}>{t("renameDay")}</button></div>;
 }
 
-/* ── EXERCISE LIBRARY ────────────────────────────────────────────────────── */
+/* ── EXERCISE LIBRARY ── */
 const LIBRARY = [
   {group:"🫀 Chest",color:"#e05c7a",exercises:["Bench Press","Incline Bench Press","Decline Bench Press","Dumbbell Fly","Cable Fly","Chest Dips","Push-up","Incline Dumbbell Press","Machine Chest Press","Pec Deck","Low Cable Fly","Svend Press"]},
   {group:"🔙 Back",color:"#5c9ee0",exercises:["Deadlift","Pull-up","Chin-up","Lat Pulldown","Seated Cable Row","Barbell Row","T-Bar Row","Single Arm Row","Face Pull","Straight Arm Pulldown","Chest Supported Row","Rack Pull","Good Morning","Hyperextension"]},
@@ -1007,53 +1612,54 @@ function ExercisePickerModal({ modal, setModal, onAdd, onClose, t }) {
   const select = (name) => setModal(m=>({...m,name}));
   return (
     <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
-      <div className="modal" style={{maxWidth:620,padding:"28px 0 0",display:"flex",flexDirection:"column",height:"85vh"}}>
-        <div style={{padding:"0 28px 20px",borderBottom:"1px solid var(--border)",flexShrink:0}}>
-          <div className="modal-title" style={{marginBottom:16}}>{t("addExo")}</div>
-          <input className="input" placeholder="🔍  Search or type your own exercise…" value={modal.name}
+      <div className="modal" style={{maxWidth:620,padding:"24px 0 0",display:"flex",flexDirection:"column",height:"90vh",maxHeight:"90vh"}}>
+        <div style={{padding:"0 24px 16px",borderBottom:"1px solid var(--border)",flexShrink:0}}>
+          <div className="modal-title" style={{marginBottom:14}}>{t("addExo")}</div>
+          <input className="input" placeholder="🔍  Search or type your own…" value={modal.name}
             onChange={e=>{setModal(m=>({...m,name:e.target.value}));setSearch(e.target.value);}}
-            onKeyDown={e=>e.key==="Enter"&&modal.name.trim()&&onAdd()} autoFocus style={{marginBottom:14}} />
+            onKeyDown={e=>e.key==="Enter"&&modal.name.trim()&&onAdd()} autoFocus style={{marginBottom:12}} />
           <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
             {allGroups.map(g=>(
               <button key={g} onClick={()=>setActiveGroup(g)} style={{
-                padding:"4px 12px",border:"1px solid",borderRadius:"20px",fontSize:".58rem",
+                padding:"5px 12px",border:"1px solid",borderRadius:"20px",fontSize:".58rem",
                 letterSpacing:"1px",cursor:"pointer",fontFamily:"var(--font-body)",fontWeight:500,
                 transition:"var(--transition)",
                 background:activeGroup===g?"var(--gold)":"transparent",
                 color:activeGroup===g?"#1a1828":"var(--muted)",
                 borderColor:activeGroup===g?"var(--gold)":"var(--border)",
+                minHeight:32,
               }}>{g==="All"?"✦ All":g}</button>
             ))}
           </div>
         </div>
-        <div style={{overflowY:"auto",flex:1,padding:"16px 28px"}}>
+        <div style={{overflowY:"auto",flex:1,padding:"14px 24px"}}>
           {filtered.length===0 ? (
             <div style={{textAlign:"center",padding:"40px 0",color:"var(--muted)"}}>
               <div style={{fontSize:"1.5rem",marginBottom:8}}>✦</div>
               <div style={{fontSize:".65rem",letterSpacing:"3px",textTransform:"uppercase"}}>No match — press Enter to add yours</div>
             </div>
           ) : filtered.map(g=>(
-            <div key={g.group} style={{marginBottom:20}}>
+            <div key={g.group} style={{marginBottom:18}}>
               <div style={{fontSize:".58rem",letterSpacing:"3px",textTransform:"uppercase",color:g.color,marginBottom:8,fontWeight:500,display:"flex",alignItems:"center",gap:8}}>
                 <span style={{flex:1,height:"1px",background:`linear-gradient(90deg,${g.color}44,transparent)`}} />{g.group}<span style={{flex:1,height:"1px",background:`linear-gradient(270deg,${g.color}44,transparent)`}} />
               </div>
               <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                 {g.exercises.map(e=>(
                   <button key={e} onClick={()=>select(e)} style={{
-                    padding:"6px 14px",border:"1px solid",borderRadius:"2px",fontSize:".68rem",cursor:"pointer",
+                    padding:"7px 14px",border:"1px solid",borderRadius:"2px",fontSize:".68rem",cursor:"pointer",
                     fontFamily:"var(--font-body)",fontWeight:modal.name===e?600:300,transition:"all .2s",
                     background:modal.name===e?`${g.color}22`:"var(--surface)",
                     color:modal.name===e?g.color:"var(--muted)",
                     borderColor:modal.name===e?g.color:"var(--border)",
                     boxShadow:modal.name===e?`0 0 12px ${g.color}33`:"none",
-                    transform:modal.name===e?"scale(1.03)":"scale(1)",
+                    minHeight:36,
                   }}>{e}</button>
                 ))}
               </div>
             </div>
           ))}
         </div>
-        <div style={{padding:"16px 28px",borderTop:"1px solid var(--border)",flexShrink:0,display:"flex",gap:10,alignItems:"center"}}>
+        <div style={{padding:"14px 24px",borderTop:"1px solid var(--border)",flexShrink:0,display:"flex",gap:10,alignItems:"center"}}>
           {modal.name.trim() && <div style={{flex:1,fontSize:".65rem",color:"var(--gold)",letterSpacing:"1px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>✦ {modal.name}</div>}
           <button className="btn btn-primary" onClick={onAdd} style={{marginLeft:"auto"}} disabled={!modal.name.trim()}>{t("addExo")}</button>
           <button className="btn btn-ghost" onClick={onClose}>{t("cancel")}</button>
